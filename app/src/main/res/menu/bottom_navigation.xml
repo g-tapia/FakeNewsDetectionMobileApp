@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/Home_nav"
+        android:icon="@drawable/ic_action_home"
+        android:title="Home" />
+    <item
+        android:id="@+id/Facebook_nav"
+        android:title="Facebook" />
+    <item
+        android:id="@+id/Twitter_nav"
+        android:title="Twitter" />
+</menu>

@@ -2,4 +2,6 @@
     <string name="app_name">AIFAKENEWS</string>
     <string name="facebook_app_id">422891998808963</string>
     <string name="fb_login_protocol_scheme">fb422891998808963</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

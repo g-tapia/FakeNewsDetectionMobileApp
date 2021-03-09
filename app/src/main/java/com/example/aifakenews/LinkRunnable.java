@@ -1,5 +1,6 @@
 package com.example.aifakenews;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;

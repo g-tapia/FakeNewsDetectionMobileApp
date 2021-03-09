@@ -3,8 +3,13 @@ package com.example.aifakenews;
 import java.util.Arrays;
 import android.util.Log;
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +25,7 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -31,7 +37,7 @@ public class FacebookActivity extends AppCompatActivity {
     private LoginButton loginButton;
     private ImageView imageView;
     private TextView textView;
-
+    private static final String TAG = "FacebookActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +68,9 @@ public class FacebookActivity extends AppCompatActivity {
                 System.out.println("Login Error");
             }
         });
+
     }
+
 
 
     @Override
