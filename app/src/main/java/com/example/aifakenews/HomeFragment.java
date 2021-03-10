@@ -23,12 +23,16 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+        return inflater.inflate(R.layout.fragment_home, container, false);
+        /*
         View fragment_layout = inflater.inflate(R.layout.fragment_home, container, false);
 
         editText = fragment_layout.findViewById(R.id.link);
         history = fragment_layout.findViewById(R.id.history);
 
         return super.onCreateView(inflater, container, savedInstanceState);
+
+         */
     }
 
     /*
