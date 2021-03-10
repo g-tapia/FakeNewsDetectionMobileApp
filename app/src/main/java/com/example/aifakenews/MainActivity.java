@@ -18,18 +18,22 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+    /*
     EditText editText;
     TextView history;
+     */
     private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        /*
         editText = findViewById(R.id.link);
         history = findViewById(R.id.history);
 
+
+         */
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
@@ -60,17 +64,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
-
+    /*
     public void onClick(View v){
-        Log.d(TAG, "onClick: The link is: " + editText.getText().toString());
-        history.setText(editText.getText().toString() + "\n" + history.getText().toString() + "\n");
-        doRunnable(editText.getText().toString());
+        try {
+            Log.d(TAG, "onClick: The link is: " + editText.getText().toString());
+            history.setText(editText.getText().toString() + "\n" + history.getText().toString() + "\n");
+            doRunnable(editText.getText().toString());
+        }catch (Exception e){
+            Log.d(TAG, "onClick: " + editText);
+        }
     }
 
     public void doRunnable(String url){
         LinkRunnable linkRunnable = new LinkRunnable(this, url);
         new Thread(linkRunnable).start();
     }
+
+     */
 
 
 
