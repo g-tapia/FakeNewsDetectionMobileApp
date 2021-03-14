@@ -4,4 +4,10 @@
     <string name="fb_login_protocol_scheme">fb422891998808963</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+
+    <!-- Change the following strings as required -->
+    <string name="back4app_app_id">TGZg2eFBEckl2lL1b4Gv4HR3U8xtcarAXAbLijB5</string>
+    <string name="back4app_client_key">aNiEZdW7Nx9jysH4sBSlIBvKJ6hLip8L6EwbAcqN</string>
 </resources>
