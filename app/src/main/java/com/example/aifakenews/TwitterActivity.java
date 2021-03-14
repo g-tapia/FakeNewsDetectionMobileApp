@@ -9,14 +9,15 @@ public class TwitterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Change back to twitter stuff
         setContentView(R.layout.activity_main);
         ParseObject firstObject = new  ParseObject("FirstClass");
         firstObject.put("message","Hey ! First message from android. Parse is now connected");
         firstObject.saveInBackground(e -> {
             if (e != null){
-                Log.e("TwitterActivity", e.getLocalizedMessage());
+                Log.e("MainActivity", e.getLocalizedMessage());
             }else{
-                Log.d("TwitterActivity","Object saved.");
+                Log.d("MainActivity","Object saved.");
             }
         });
     }
