@@ -1,5 +1,7 @@
 package com.example.aifakenews;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
@@ -34,18 +36,38 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         button = view.findViewById(R.id.button);
         button.setOnClickListener(this);
 
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                if (history.getText().toString().equals("")){
+                    Toast.makeText(getActivity(), "History is empty", Toast.LENGTH_SHORT).show();
+                }else{
+                    String historytext = history.getText().toString();
+                    final CharSequence[] hArray = historytext.split("\\r?\\n");
+                    Log.d(TAG, "onClick: the length of the list is: " + hArray.length);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Make a selection:");
+                    builder.setItems(hArray, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            editText.setText(hArray[which]);
+                        }
+                    });
+
+                    builder.setNegativeButton("Nevermind", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            ;
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+
+                    dialog.show();
+
+                }
+            }
+        });
+
         return view;
-        //return inflater.inflate(R.layout.fragment_home, container, false);
-        /*
-        View fragment_layout = inflater.inflate(R.layout.fragment_home, container, false);
-
-        editText = fragment_layout.findViewById(R.id.link);
-        history = fragment_layout.findViewById(R.id.history);
-
-
-        return super.onCreateView(inflater, container, savedInstanceState);
-        */
-
     }
 
     @Override
@@ -53,9 +75,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         Log.d(TAG, "onClick: The link is: " + editText.getText().toString());
         history.setText(editText.getText().toString() + "\n" + history.getText().toString() + "\n");
 
-        new Thread(new Runnable(){
+        new Thread(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 Looper.prepare(); //////////////
                 Uri dataUri = Uri.parse(editText.getText().toString());
                 String urlToUse = dataUri.toString();
@@ -67,7 +89,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 try {
                     article = extractor.extractContent(urlToUse, true);
                     Log.d(TAG, "run: " + article);
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(getActivity(), "Invalid URL", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "run: " + article);
                 }
@@ -76,7 +98,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 try {
                     details = article.getCleanedArticleText();
                     Log.d(TAG, "run: " + details);
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(getActivity(), "Invalid URL", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "run: " + details);
                 }
@@ -84,7 +106,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         }).start();
 
     }
-
 
 
 
