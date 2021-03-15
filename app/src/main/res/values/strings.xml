@@ -12,4 +12,6 @@
     <string name="back4app_client_key">aNiEZdW7Nx9jysH4sBSlIBvKJ6hLip8L6EwbAcqN</string>
     <string name="TwitterAPIKey">HodZDPDy3WdsWefcX3cuMMCbh</string>
     <string name="TwitterAPISecret">Whuqs6tNTCZfh5odpEvQtDwVZPgtE8u0d9GALXHx6vrF8Wqvjz</string>
+    <string name="search_history">Search History:</string>
+    <string name="enter_link_here">Enter Link Here</string>
 </resources>

@@ -2,6 +2,7 @@ package com.example.aifakenews;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -54,50 +56,35 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         new Thread(new Runnable(){
             @Override
             public void run(){
+                Looper.prepare(); //////////////
                 Uri dataUri = Uri.parse(editText.getText().toString());
                 String urlToUse = dataUri.toString();
 
                 Configuration config = new Configuration(getActivity().getCacheDir().getAbsolutePath());
                 ContentExtractor extractor = new ContentExtractor(config);
 
-                Article article = extractor.extractContent(urlToUse, true);
-                if (article == null) {
-                    Log.d(TAG, "Couldn't load the article, is your URL correct, is your Internet working?");
-                    return;
+                Article article = null;
+                try {
+                    article = extractor.extractContent(urlToUse, true);
+                    Log.d(TAG, "run: " + article);
+                }catch (Exception e){
+                    Toast.makeText(getActivity(), "Invalid URL", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "run: " + article);
                 }
 
-                String details = article.getCleanedArticleText();
-                Log.d(TAG, "run: " + details);
-                if (details == null) {
-                    Log.w(TAG, "Couldn't load the article text, the page is messy. Trying with page description...");
-                    details = article.getMetaDescription();
+                String details = "";
+                try {
+                    details = article.getCleanedArticleText();
+                    Log.d(TAG, "run: " + details);
+                }catch (Exception e){
+                    Toast.makeText(getActivity(), "Invalid URL", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "run: " + details);
                 }
-
-
             }
         }).start();
 
-        //doRunnable(editText.getText().toString());
     }
 
-    /*
-    public void onClick(View v){
-        //editText.getText().toString();
-        Log.d(TAG, "onClick: The link is: " + editText.getText().toString());
-        history.setText(editText.getText().toString() + "\n" + history.getText().toString() + "\n");
-        //doRunnable(editText.getText().toString());
-    }
-
-     */
-    /*
-    public void doRunnable(String url){
-
-        LinkRunnable linkRunnable = new LinkRunnable(getActivity(), url);
-        new Thread(linkRunnable).start();
-
-    }
-
-     */
 
 
 
