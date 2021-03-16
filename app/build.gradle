@@ -42,14 +42,14 @@ dependencies {
     implementation "com.github.parse-community.Parse-SDK-Android:parse:1.26.0"
     implementation "com.google.firebase:firebase-storage:19.2.1"
     testImplementation 'junit:junit:4.12'
-    compile 'me.angrybyte.goose:goose:1.8.0'
+    implementation 'me.angrybyte.goose:goose:1.8.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     //Twitter
-    compile 'com.twitter.sdk.android:twitter:3.3.0'
-    compile 'com.twitter.sdk.android:twitter-core:3.3.0'
+    implementation 'com.twitter.sdk.android:twitter:3.3.0'
+    implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
     implementation 'com.twitter.sdk.android:tweet-ui:3.3.0'
-    compile('com.twitter.sdk.android:twitter-core:3.3.0') {transitive = true;}
+    implementation('com.twitter.sdk.android:twitter-core:3.3.0') {transitive = true;}
     //Firebase
     implementation platform('com.google.firebase:firebase-bom:26.7.0')
     implementation 'com.google.firebase:firebase-analytics'
