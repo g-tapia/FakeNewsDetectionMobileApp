@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "335724805627",
+    "project_id": "aifakenews-ipro497",
+    "storage_bucket": "aifakenews-ipro497.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335724805627:android:c9a29de7c582c8967bdf5e",
+        "android_client_info": {
+          "package_name": "com.example.aifakenews"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335724805627-t7ot6vhahqfhuc281lp98o3qvicqnlhr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_pP_7YQiAJmgBtk8FQg98Fa5A_RU0HfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "335724805627-t7ot6vhahqfhuc281lp98o3qvicqnlhr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,13 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".MainActivity" />
+    tools:context=".TwitterLoginActivity" />
 
-    <!-- <com.twitter.sdk.android.core.identity.TwitterLoginButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="user Login"
-        android:id="@+id/btnTwitterLogin"
-        android:enabled="true"/>
-        -->
+<!--    <com.twitter.sdk.android.core.identity.TwitterLoginButton-->
+<!--    android:id="@+id/twitter_login_button"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_centerVertical="true"-->
+<!--    android:layout_centerHorizontal="true"/>-->
 
+<!--    <ProgressBar-->
+<!--        android:id="@+id/indeterminateProgressBar"-->
+<!--        style="?android:attr/progressBarStyleHorizontal"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:indeterminate="true"-->
+<!--        android:visibility="invisible"-->
+<!--        android:layout_marginTop="-7dp"/>-->
