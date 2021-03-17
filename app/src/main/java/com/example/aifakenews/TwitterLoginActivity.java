@@ -1,17 +1,18 @@
 package com.example.aifakenews;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -22,134 +23,86 @@ import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class TwitterLoginActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private TwitterLoginButton mTwitterBtn;
-    private ProgressBar mIndeterminateProgressBar;
+    TwitterLoginButton twitterLoginButton;
+    FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.twitter_login_fragment);
+        twitterLoginButton = findViewById(R.id.twitter_login_button);
+        fAuth = FirebaseAuth.getInstance();
 
-        //This code must be entering before the setContentView to make the twitter login work...
-        TwitterAuthConfig mTwitterAuthConfig = new TwitterAuthConfig(getString(R.string.TwitterAPIKey),
-                getString(R.string.TwitterAPISecret));
+        TwitterAuthConfig config = new TwitterAuthConfig(getString(R.string.TwitterAPIKey), getString(R.string.TwitterAPISecret));
         TwitterConfig twitterConfig = new TwitterConfig.Builder(this)
-                .twitterAuthConfig(mTwitterAuthConfig)
+                .twitterAuthConfig(config)
                 .build();
+
         Twitter.initialize(twitterConfig);
 
-        setContentView(R.layout.twitter_login_fragment);
-
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
-
-        mTwitterBtn = findViewById(R.id.twitter_login_button);
-        mIndeterminateProgressBar = findViewById(R.id.indeterminateProgressBar);
-
-        mAuthListener = new FirebaseAuth.AuthStateListener(){
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth){
-                if (firebaseAuth.getCurrentUser() != null){
-                    startActivity(new Intent(TwitterLoginActivity.this, MainActivity.class));
-                }
-            }
-        };
-
-        UpdateTwitterButton();
-
-        mTwitterBtn.setCallback(new Callback<TwitterSession>() {
+        twitterLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
-                Toast.makeText(TwitterLoginActivity.this, "Signed in to twitter successful", Toast.LENGTH_LONG).show();
-                signInToFirebaseWithTwitterSession(result.data);
-                mTwitterBtn.setVisibility(View.VISIBLE);
-                mIndeterminateProgressBar.setVisibility(View.VISIBLE);
-                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
+                TwitterAuthToken authToken = session.getAuthToken();
+                String token = authToken.token;
+                String secret = authToken.secret;
+
+                //getTwitterUserProfile(session);
+
+                MainProcess(result.data);
             }
 
             @Override
             public void failure(TwitterException exception) {
-                Toast.makeText(TwitterLoginActivity.this, "Login failed. No internet or No Twitter app found on your phone", Toast.LENGTH_LONG).show();
-                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                mIndeterminateProgressBar.setVisibility(View.GONE);
-                UpdateTwitterButton();
+                message(exception.getMessage());
             }
         });
+    }
 
-        mTwitterBtn.setCallback(new Callback<TwitterSession>() {
+    private void MainProcess(TwitterSession session) {
+        AuthCredential credential = TwitterAuthProvider.getCredential(session.getAuthToken().token,session.getAuthToken().secret);
+        fAuth.signInWithCredential(credential).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
-            public void success(Result<TwitterSession> result) {
-                // ... do something
+            public void onSuccess(AuthResult authResult) {
+                FirebaseUser user = fAuth.getCurrentUser();
+                Intent intent = new Intent(TwitterLoginActivity.this, FacebookActivity.class);
+                intent.putExtra("twitteremail", user.getEmail());
+                startActivity(intent);
             }
-
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void failure(TwitterException exception) {
-                // ... do something
+            public void onFailure(@NonNull Exception e) {
+                message(e.getMessage());
             }
         });
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mTwitterBtn.onActivityResult(requestCode, resultCode, data);
 
+        twitterLoginButton.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            updateUI();
-        }
-        mAuth.addAuthStateListener(mAuthListener);
+    public void message(String msg){
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
-    private void updateUI() {
-        Toast.makeText(TwitterLoginActivity.this, "You're logged in", Toast.LENGTH_LONG);
-        //Sending user to new screen after successful login
-        Intent mainActivity = new Intent(TwitterLoginActivity.this, TwitterLoginActivity.class);
-        startActivity(mainActivity);
-        finish();
-    }
 
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        mAuth.removeAuthStateListener(mAuthListener);
-    }
-    private void UpdateTwitterButton(){
-        if (TwitterCore.getInstance().getSessionManager().getActiveSession() == null){
-            mTwitterBtn.setVisibility(View.VISIBLE);
-        }
-        else{
-            mTwitterBtn.setVisibility(View.GONE);
-        }
-    }
+    // [END auth_fui_result]
 
-    private void signInToFirebaseWithTwitterSession(TwitterSession session){
-        AuthCredential credential = TwitterAuthProvider.getCredential(session.getAuthToken().token,
-                session.getAuthToken().secret);
-
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Toast.makeText(TwitterLoginActivity.this, "Signed in firebase twitter successful", Toast.LENGTH_LONG).show();
-                        if (!task.isSuccessful()){
-                            Toast.makeText(TwitterLoginActivity.this, "Auth firebase twitter failed", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }
 }
