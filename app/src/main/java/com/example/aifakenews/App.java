@@ -3,7 +3,7 @@ package com.example.aifakenews;
 import android.app.Application;
 import android.util.Log;
 
-import com.parse.Parse;
+
 import com.twitter.sdk.android.core.DefaultLogger;
 import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;

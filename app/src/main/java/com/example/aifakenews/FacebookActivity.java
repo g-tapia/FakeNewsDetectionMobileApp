@@ -1,5 +1,8 @@
 package com.example.aifakenews;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
 import java.util.Arrays;
 import android.util.Log;
 import android.content.Intent;
@@ -18,10 +21,8 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -47,7 +48,6 @@ public class FacebookActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.profilePic);
         textView = findViewById(R.id.nameText);
-
         loginButton = findViewById(R.id.login_button);
 
         callbackManager = CallbackManager.Factory.create();
