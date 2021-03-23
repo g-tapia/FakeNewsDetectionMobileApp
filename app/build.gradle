@@ -48,6 +48,7 @@ dependencies {
     implementation 'me.angrybyte.goose:goose:1.8.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.google.android.material:material:1.4.0-alpha01'
     //Twitter
     implementation 'com.twitter.sdk.android:twitter:3.3.0'
     implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
