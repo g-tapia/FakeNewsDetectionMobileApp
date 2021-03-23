@@ -35,6 +35,7 @@ public class FacebookActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
     private LoginButton loginButton;
+
     private ImageView imageView;
     private TextView textView;
     private static final String TAG = "FacebookActivity";
@@ -42,10 +43,12 @@ public class FacebookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facebook);
+        FacebookSdk.sdkInitialize(FacebookActivity.this);
 
-        loginButton = findViewById(R.id.login_button);
         imageView = findViewById(R.id.profilePic);
         textView = findViewById(R.id.nameText);
+
+        loginButton = findViewById(R.id.login_button);
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -55,28 +58,64 @@ public class FacebookActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                System.out.println("Login Successful");
+                Log.d("Demo", "Login Successful");
             }
 
             @Override
             public void onCancel() {
-                System.out.println("Login Cancelled");
+                Log.d("Demo", "Login Cancelled");
             }
 
             @Override
             public void onError(FacebookException error) {
-                System.out.println("Login Error");
+                Log.d("Demo", "Login Error");
             }
         });
 
     }
 
+//    public void getProfile() {
+//
+//        try {
+//            accessToken = AccessToken.getCurrentAccessToken();
+//            GraphRequest request = GraphRequest.newMeRequest(
+//                    accessToken,
+//                    new GraphRequest.GraphJSONObjectCallback() {
+//                        @Override
+//                        public void onCompleted(
+//                                JSONObject object,
+//                                GraphResponse response) {
+//                            Log.d(TAG, "Graph Object :" + object);
+//                            try {
+//                                String[] splitStr = object.getString("name").split("\\s+");
+//                                FBFirstname = splitStr[0];
+//                                FBLastName = splitStr[1];
+//                                FBEmail = object.getString("email");
+//                                FBUUID = object.getString("id");
+//                                Log.e(TAG, "firstnamev: " + splitStr[0]);
+//                                Log.e(TAG, "last name: " + splitStr[1]);
+//                                Log.e(TAG, "Email id : " + object.getString("email"));
+//                                Log.e(TAG, "ID :" + object.getString("id"));
+//
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    });
+//            Bundle parameters = new Bundle();
+//            parameters.putString("fields", "id,name,link,birthday,gender,email");
+//            request.setParameters(parameters);
+//            request.executeAsync();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
         GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
