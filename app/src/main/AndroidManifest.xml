@@ -3,10 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.aifakenews">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <uses-feature android:name="android.hardware.type.watch" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -18,21 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <uses-library
-            android:name="com.google.android.wearable"
-            android:required="true" />
-        <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
-        -->
-        <meta-data
-            android:name="com.google.android.wearable.standalone"
-            android:value="true" />
-
-        <activity android:name=".HowToUse" />
-        <activity android:name=".FacebookNewsFeed" />
-        <activity android:name=".TwitterLoginActivity" />
+        <activity android:name=".FacebookNewsFeed"></activity>
+        <activity android:name=".TwitterLoginActivity"></activity>
         <activity android:name=".FacebookActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".MainActivity">
