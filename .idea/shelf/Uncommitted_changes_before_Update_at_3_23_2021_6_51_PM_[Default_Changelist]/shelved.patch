@@ -1,0 +1,611 @@
+Index: app/src/main/java/com/example/aifakenews/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.aifakenews;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.Menu;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.EditText;\r\nimport android.widget.TextView;\r\n\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    private static final String TAG = \"MainActivity\";\r\n    private Menu menu;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_main);\r\n\r\n        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);\r\n        bottomNav.setOnNavigationItemSelectedListener(navListener);\r\n\r\n        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();\r\n    }\r\n\r\n    private BottomNavigationView.OnNavigationItemSelectedListener navListener =\r\n            new BottomNavigationView.OnNavigationItemSelectedListener() {\r\n                @Override\r\n                public boolean onNavigationItemSelected(@NonNull MenuItem item) {\r\n                    Fragment selectedFragment = null;\r\n                    switch (item.getItemId()){\r\n                        case R.id.Home_nav:\r\n                            selectedFragment = new HomeFragment();\r\n                            Log.d(TAG, \"onNavigationItemSelected: \" + selectedFragment);\r\n                            break;\r\n                        case R.id.Facebook_nav:\r\n                            selectedFragment = new FacebookFragment();\r\n                            Log.d(TAG, \"onNavigationItemSelected: \" + selectedFragment);\r\n                            break;\r\n                        case R.id.Twitter_nav:\r\n                            selectedFragment = new TwitterFragment();\r\n                            break;\r\n                    }\r\n                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();\r\n\r\n                    return true;\r\n                }\r\n            };\r\n\r\n    @Override\r\n    public boolean onCreateOptionsMenu(Menu menu) {\r\n        getMenuInflater().inflate(R.menu.menu, menu);\r\n        return true;\r\n    }\r\n\r\n    @Override\r\n    public boolean onOptionsItemSelected(@NonNull MenuItem item) {\r\n        switch (item.getItemId()){\r\n            case R.id.about:\r\n                Intent intent = new Intent(MainActivity.this, AboutActivity.class);\r\n                startActivity(intent);\r\n                return true;\r\n            case R.id.help:\r\n                return true;\r\n            default:\r\n                return super.onOptionsItemSelected(item);\r\n        }\r\n\r\n    }\r\n\r\n    /*\r\n    public void onClick(View v){\r\n        try {\r\n            Log.d(TAG, \"onClick: The link is: \" + editText.getText().toString());\r\n            history.setText(editText.getText().toString() + \"\\n\" + history.getText().toString() + \"\\n\");\r\n            doRunnable(editText.getText().toString());\r\n        }catch (Exception e){\r\n            Log.d(TAG, \"onClick: \" + editText);\r\n        }\r\n    }\r\n\r\n    public void doRunnable(String url){\r\n        LinkRunnable linkRunnable = new LinkRunnable(this, url);\r\n        new Thread(linkRunnable).start();\r\n    }\r\n\r\n     */\r\n\r\n\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/aifakenews/MainActivity.java	(revision 5351463ca395cada31d96ef4eddd8274e84b1762)
++++ app/src/main/java/com/example/aifakenews/MainActivity.java	(date 1616542656030)
+@@ -18,7 +18,7 @@
+ 
+ import com.google.android.material.bottomnavigation.BottomNavigationView;
+ 
+-public class MainActivity extends AppCompatActivity {
++public class MainActivity extends AppCompatActivity{
+ 
+     private static final String TAG = "MainActivity";
+     private Menu menu;
+Index: app/src/main/res/layout/activity_facebook_news_feed.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".FacebookNewsFeed\">\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_facebook_news_feed.xml	(revision 5351463ca395cada31d96ef4eddd8274e84b1762)
++++ app/src/main/res/layout/activity_facebook_news_feed.xml	(date 1616542656046)
+@@ -1,9 +1,17 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     tools:context=".FacebookNewsFeed">
+ 
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
++    <androidx.recyclerview.widget.RecyclerView
++        android:id="@+id/recyclerView"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content">
++    </androidx.recyclerview.widget.RecyclerView>
++
++
++
++</RelativeLayout>
+\ No newline at end of file
+Index: app/src/main/res/values/styles.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <!-- Base application theme. -->\r\n    <style name=\"AppTheme\" parent=\"Theme.AppCompat.Light.DarkActionBar\">\r\n        <!-- Customize your theme here. -->\r\n        <item name=\"colorPrimary\">@color/colorPrimary</item>\r\n        <item name=\"colorPrimaryDark\">@color/colorPrimaryDark</item>\r\n        <item name=\"colorAccent\">@color/colorAccent</item>\r\n    </style>\r\n\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/styles.xml	(revision 5351463ca395cada31d96ef4eddd8274e84b1762)
++++ app/src/main/res/values/styles.xml	(date 1616542656077)
+@@ -1,10 +1,13 @@
+ <resources>
+     <!-- Base application theme. -->
+-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
++    <style name = "AppTheme" parent = "Theme.MaterialComponents.Light.DarkActionBar"><!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"> -->
+         <!-- Customize your theme here. -->
+         <item name="colorPrimary">@color/colorPrimary</item>
+         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+         <item name="colorAccent">@color/colorAccent</item>
++
++
+     </style>
+ 
++
+ </resources>
+\ No newline at end of file
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\r\napply plugin: 'com.google.gms.google-services'\r\n\r\nandroid {\r\n    compileSdkVersion 30\r\n    buildToolsVersion \"30.0.2\"\r\n\r\n    defaultConfig {\r\n        applicationId \"com.example.aifakenews\"\r\n        minSdkVersion 24\r\n        targetSdkVersion 30\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\r\n    implementation 'androidx.appcompat:appcompat:1.2.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'\r\n    implementation 'com.facebook.android:facebook-android-sdk:5.15.3'\r\n    implementation 'com.facebook.android:facebook-android-sdk:5.15.3'\r\n    implementation 'com.squareup.picasso:picasso:2.71828'\r\n    implementation 'com.google.android.material:material:1.3.0'\r\n    implementation 'androidx.legacy:legacy-support-v4:1.0.0'\r\n    implementation 'com.google.android.material:material:1.3.0'\r\n    implementation 'com.github.parse-community.Parse-SDK-Android:bolts-tasks:1.26.0'\r\n    implementation \"com.github.parse-community.Parse-SDK-Android:parse:1.26.0\"\r\n    implementation \"com.google.firebase:firebase-storage:19.2.1\"\r\n    implementation 'androidx.wear:wear:1.0.0'\r\n    testImplementation 'junit:junit:4.13.2'\r\n    implementation 'me.angrybyte.goose:goose:1.8.0'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.2'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'\r\n    //Twitter\r\n    implementation 'com.twitter.sdk.android:twitter:3.3.0'\r\n    implementation 'com.twitter.sdk.android:twitter-core:3.3.0'\r\n    implementation 'com.twitter.sdk.android:tweet-ui:3.3.0'\r\n    implementation('com.twitter.sdk.android:twitter-core:3.3.0') {transitive = true;}\r\n    //Firebase\r\n    implementation platform('com.google.firebase:firebase-bom:26.7.0')\r\n    implementation 'com.google.firebase:firebase-analytics'\r\n    implementation 'com.google.firebase:firebase-auth'\r\n    implementation 'com.firebaseui:firebase-ui-auth:6.4.0'\r\n    implementation 'com.facebook.android:facebook-android-sdk:5.15.3'\r\n    implementation 'com.twitter.sdk.android:twitter-core:3.3.0'\r\n    compileOnly 'com.google.android.wearable:wearable:2.6.0'\r\n}\r\n\r\nrepositories {\r\n    maven { url 'https://jitpack.io' }\r\n    jcenter()\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 5351463ca395cada31d96ef4eddd8274e84b1762)
++++ app/build.gradle	(date 1616542996137)
+@@ -41,7 +41,6 @@
+     implementation 'com.github.parse-community.Parse-SDK-Android:bolts-tasks:1.26.0'
+     implementation "com.github.parse-community.Parse-SDK-Android:parse:1.26.0"
+     implementation "com.google.firebase:firebase-storage:19.2.1"
+-    implementation 'androidx.wear:wear:1.0.0'
+     testImplementation 'junit:junit:4.13.2'
+     implementation 'me.angrybyte.goose:goose:1.8.0'
+     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+@@ -58,7 +57,6 @@
+     implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
+     implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
+     implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
+-    compileOnly 'com.google.android.wearable:wearable:2.6.0'
+ }
+ 
+ repositories {
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_3_23_2021_5_12_PM_[Default_Changelist]/shelved.patch
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_3_23_2021_5_12_PM_[Default_Changelist]/shelved.patch	(date 1616542655999)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_3_23_2021_5_12_PM_[Default_Changelist]/shelved.patch	(date 1616542655999)
+@@ -0,0 +1,36 @@
++Index: app/build.gradle
++IDEA additional info:
++Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
++<+>apply plugin: 'com.android.application'\r\napply plugin: 'com.google.gms.google-services'\r\n\r\nandroid {\r\n    compileSdkVersion 30\r\n    buildToolsVersion \"30.0.2\"\r\n\r\n    defaultConfig {\r\n        applicationId \"com.example.aifakenews\"\r\n        minSdkVersion 24\r\n        targetSdkVersion 30\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\r\n    implementation 'androidx.appcompat:appcompat:1.2.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'\r\n    implementation 'com.facebook.android:facebook-android-sdk:5.15.3'\r\n    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'\r\n    implementation 'com.squareup.picasso:picasso:2.71828'\r\n    implementation 'com.google.android.material:material:1.3.0'\r\n    implementation 'androidx.legacy:legacy-support-v4:1.0.0'\r\n    implementation 'com.google.android.material:material:1.3.0'\r\n    implementation 'com.github.parse-community.Parse-SDK-Android:bolts-tasks:1.26.0'\r\n    implementation \"com.github.parse-community.Parse-SDK-Android:parse:1.26.0\"\r\n    implementation \"com.google.firebase:firebase-storage:19.2.1\"\r\n    testImplementation 'junit:junit:4.12'\r\n    implementation 'me.angrybyte.goose:goose:1.8.0'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.2'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'\r\n    //Twitter\r\n    implementation 'com.twitter.sdk.android:twitter:3.3.0'\r\n    implementation 'com.twitter.sdk.android:twitter-core:3.3.0'\r\n    implementation 'com.twitter.sdk.android:tweet-ui:3.3.0'\r\n    implementation('com.twitter.sdk.android:twitter-core:3.3.0') {transitive = true;}\r\n    //Firebase\r\n    implementation platform('com.google.firebase:firebase-bom:26.7.0')\r\n    implementation 'com.google.firebase:firebase-analytics'\r\n    implementation 'com.google.firebase:firebase-auth'\r\n    implementation 'com.firebaseui:firebase-ui-auth:6.4.0'\r\n    implementation 'com.facebook.android:facebook-android-sdk:4.x'\r\n    implementation 'com.twitter.sdk.android:twitter-core:3.x'\r\n}\r\n\r\nrepositories {\r\n    maven { url 'https://jitpack.io' }\r\n    jcenter()\r\n}
++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
++<+>UTF-8
++===================================================================
++--- app/build.gradle	(revision 09f48279f2613531d653b956f8305e44d546e3fd)
+++++ app/build.gradle	(date 1616524617930)
++@@ -45,6 +45,7 @@
++     implementation 'me.angrybyte.goose:goose:1.8.0'
++     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
++     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+++    implementation 'com.google.android.material:material:1.4.0-alpha01'
++     //Twitter
++     implementation 'com.twitter.sdk.android:twitter:3.3.0'
++     implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
++Index: app/src/main/res/layout/fragment_home.xml
++IDEA additional info:
++Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
++<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".MainActivity\">\r\n\r\n    <EditText\r\n        android:id=\"@+id/link\"\r\n        android:layout_width=\"331dp\"\r\n        android:layout_height=\"54dp\"\r\n        android:autofillHints=\"\"\r\n        android:ems=\"10\"\r\n        android:hint=\"@string/enter_link_here\"\r\n        android:inputType=\"text\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.054\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/button\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Detect\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/link\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/history\"\r\n        android:layout_width=\"331dp\"\r\n        android:layout_height=\"247dp\"\r\n        android:background=\"#EFC8C8\"\r\n        android:clickable=\"true\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/link\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/link\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/searchHistoryText\"\r\n        app:layout_constraintVertical_bias=\"0.0\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/searchHistoryText\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:text=\"@string/search_history\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/link\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/button\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
++<+>UTF-8
++===================================================================
++--- app/src/main/res/layout/fragment_home.xml	(revision 09f48279f2613531d653b956f8305e44d546e3fd)
+++++ app/src/main/res/layout/fragment_home.xml	(date 1616525189936)
++@@ -27,7 +27,8 @@
++         android:text="Detect"
++         app:layout_constraintEnd_toEndOf="parent"
++         app:layout_constraintStart_toStartOf="parent"
++-        app:layout_constraintTop_toBottomOf="@+id/link" />
+++        app:layout_constraintTop_toBottomOf="@+id/link"
+++        />
++ 
++     <TextView
++         android:id="@+id/history"
+Index: app/src/main/res/font/roboto.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/font/roboto.xml	(date 1616542656046)
++++ app/src/main/res/font/roboto.xml	(date 1616542656046)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<font-family xmlns:app="http://schemas.android.com/apk/res-auto"
++        app:fontProviderAuthority="com.google.android.gms.fonts"
++        app:fontProviderPackage="com.google.android.gms"
++        app:fontProviderQuery="Roboto"
++        app:fontProviderCerts="@array/com_google_android_gms_fonts_certs">
++</font-family>
+Index: app/src/main/res/font/roboto_medium.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/font/roboto_medium.xml	(date 1616542656046)
++++ app/src/main/res/font/roboto_medium.xml	(date 1616542656046)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<font-family xmlns:app="http://schemas.android.com/apk/res-auto"
++        app:fontProviderAuthority="com.google.android.gms.fonts"
++        app:fontProviderPackage="com.google.android.gms"
++        app:fontProviderQuery="name=Roboto&amp;weight=500"
++        app:fontProviderCerts="@array/com_google_android_gms_fonts_certs">
++</font-family>
+Index: app/src/main/res/layout/row_feed.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/row_feed.xml	(date 1616542656064)
++++ app/src/main/res/layout/row_feed.xml	(date 1616542656064)
+@@ -0,0 +1,198 @@
++<?xml version="1.0" encoding="utf-8"?>
++<RelativeLayout
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent">
++
++    <RelativeLayout
++        android:id="@+id/relLayout"
++        android:layout_marginLeft="15dp"
++        android:layout_marginTop="15dp"
++        android:layout_marginRight="15dp"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content">
++
++        <ImageView
++            android:id="@+id/imgView_profile_pic"
++            android:layout_width="45dp"
++            android:layout_height="45dp"
++            android:adjustViewBounds="true"
++            android:scaleType="fitCenter"
++            android:src="@drawable/ic_profile_pic"/>
++
++        <LinearLayout
++            android:orientation="vertical"
++            android:layout_centerVertical="true"
++            android:layout_marginLeft="10dp"
++            android:layout_toRightOf="@id/imgView_profile_pic"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content">
++
++            <TextView
++                android:id="@+id/textView_"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="Facebook Friend1"
++                android:textColor="@color/black"
++                android:textSize="17sp"
++                android:fontFamily="sans-serif-medium"/>
++
++            <TextView
++                android:id="@+id/textView_timeSincePost"
++                android:layout_width="wrap_content"
++                android:textSize="13sp"
++                android:text="12 hrs"
++                android:textColor="@color/grey"
++                android:layout_height="wrap_content" />
++        </LinearLayout>
++
++
++    </RelativeLayout>
++
++    <TextView
++        android:id="@+id/textView_status"
++        android:layout_below="@id/relLayout"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_marginLeft="15dp"
++        android:layout_marginTop="15dp"
++        android:layout_marginRight="15dp"
++        android:text="This is a status"
++        android:textColor="@color/black"
++        android:textSize="16sp"/>
++
++    <ImageView
++        android:id="@+id/imageView_postPic"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_below="@id/textView_status"
++        android:layout_marginTop="5dp"
++        android:adjustViewBounds="true"
++        android:scaleType="fitCenter"
++        android:visibility="gone"
++        android:src="@drawable/ic_launcher_background"/>
++
++    <RelativeLayout
++        android:id="@+id/relLayout2"
++        android:layout_below="@id/imageView_postPic"
++        android:layout_marginLeft="15dp"
++        android:layout_marginTop="15dp"
++        android:layout_marginRight="15dp"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content" >
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content" >
++
++            <ImageView
++                android:id="@+id/imageVIew_likeButton"
++                android:layout_width="15dp"
++                android:layout_height="15dp"
++                android:src="@drawable/ic_fb_like"
++                android:layout_marginLeft="5dp"/>
++
++
++            <TextView
++                android:id="@+id/textView_likes"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="10"
++                android:textSize="13sp"
++                android:textColor="@color/grey"
++                android:layout_marginLeft="10dp"/>
++
++
++        </LinearLayout>
++        
++        <TextView
++            android:id="@+id/textView_comments"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:textColor="@color/grey"
++            android:textSize="13sp"
++            android:text="5 comments"
++            android:layout_alignParentRight="true"
++            android:layout_marginRight="5dp"/>
++
++    </RelativeLayout>
++
++    <ImageView
++        android:id="@+id/imageView_line"
++        android:layout_below="@id/relLayout2"
++        android:layout_width="match_parent"
++        android:layout_height="0.5dp"
++        android:layout_marginTop="10dp"
++        android:background="@color/light_grey"/>
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_below="@id/imageView_line"
++        android:layout_height="45dp" >
++
++        <RelativeLayout
++            android:layout_width="match_parent"
++            android:layout_weight="1"
++            android:layout_height="match_parent" >
++
++            <LinearLayout
++                android:layout_centerInParent="true"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content" >
++
++
++                <ImageView
++                    android:layout_width="18dp"
++                    android:layout_height="18dp"
++                    android:adjustViewBounds="true"
++                    android:scaleType="fitCenter"
++                    android:src="@drawable/ic_fb_hollow_like"
++                    android:layout_marginLeft="5dp"/>
++
++                <TextView
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_marginLeft="10dp"
++                    android:text="Like"
++                    android:fontFamily="sans-serif-medium"
++                    android:textColor="@color/black"
++                    android:textSize="13sp"/>
++
++            </LinearLayout>
++
++        </RelativeLayout>
++        <RelativeLayout
++            android:layout_width="match_parent"
++            android:layout_weight="1"
++            android:layout_height="match_parent" >
++
++            <LinearLayout
++                android:layout_centerInParent="true"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content" >
++
++
++                <ImageView
++                    android:layout_width="18dp"
++                    android:layout_height="18dp"
++                    android:adjustViewBounds="true"
++                    android:scaleType="fitCenter"
++                    android:src="@drawable/ic_fb_comment_button"
++                    android:layout_marginLeft="5dp"/>
++
++                <TextView
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_marginLeft="10dp"
++                    android:text="Comment"
++                    android:fontFamily="sans-serif-medium"
++                    android:textColor="@color/black"
++                    android:textSize="13sp"/>
++
++            </LinearLayout>
++
++        </RelativeLayout>
++
++    </LinearLayout>
++
++</RelativeLayout>
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.example.aifakenews\">\r\n\r\n    <uses-permission android:name=\"android.permission.WAKE_LOCK\" />\r\n\r\n    <uses-feature android:name=\"android.hardware.type.watch\" />\r\n\r\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n\r\n    <application\r\n        android:name=\".App\"\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/AppTheme\">\r\n\r\n        <uses-library\r\n            android:name=\"com.google.android.wearable\"\r\n            android:required=\"true\" />\r\n        <!--\r\n               Set to true if your app is Standalone, that is, it does not require the handheld\r\n               app to run.\r\n        -->\r\n        <meta-data\r\n            android:name=\"com.google.android.wearable.standalone\"\r\n            android:value=\"true\" />\r\n\r\n        <activity android:name=\".HowToUse\" />\r\n        <activity android:name=\".FacebookNewsFeed\" />\r\n        <activity android:name=\".TwitterLoginActivity\" />\r\n        <activity android:name=\".FacebookActivity\" />\r\n        <activity android:name=\".AboutActivity\" />\r\n        <activity android:name=\".MainActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n        <activity android:name=\"com.twitter.sdk.android.core.identity.OAuthActivity\" />\r\n\r\n        <meta-data\r\n            android:name=\"com.facebook.sdk.ApplicationId\"\r\n            android:value=\"@string/facebook_app_id\"\r\n            tools:replace=\"android:value\" />\r\n\r\n        <activity\r\n            android:name=\"com.facebook.FacebookActivity\"\r\n            android:configChanges=\"keyboard|keyboardHidden|screenLayout|screenSize|orientation\"\r\n            android:label=\"@string/app_name\" />\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 5351463ca395cada31d96ef4eddd8274e84b1762)
++++ app/src/main/AndroidManifest.xml	(date 1616542981636)
+@@ -3,10 +3,6 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     package="com.example.aifakenews">
+ 
+-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+-
+-    <uses-feature android:name="android.hardware.type.watch" />
+-
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+     <uses-permission android:name="android.permission.INTERNET" />
+ 
+@@ -18,21 +14,8 @@
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
+         android:theme="@style/AppTheme">
+-
+-        <uses-library
+-            android:name="com.google.android.wearable"
+-            android:required="true" />
+-        <!--
+-               Set to true if your app is Standalone, that is, it does not require the handheld
+-               app to run.
+-        -->
+-        <meta-data
+-            android:name="com.google.android.wearable.standalone"
+-            android:value="true" />
+-
+-        <activity android:name=".HowToUse" />
+-        <activity android:name=".FacebookNewsFeed" />
+-        <activity android:name=".TwitterLoginActivity" />
++        <activity android:name=".FacebookNewsFeed"></activity>
++        <activity android:name=".TwitterLoginActivity"></activity>
+         <activity android:name=".FacebookActivity" />
+         <activity android:name=".AboutActivity" />
+         <activity android:name=".MainActivity">
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_3_23_2021_5_12_PM__Default_Changelist_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_3_23_2021_5_12_PM__Default_Changelist_.xml	(date 1616542682217)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_3_23_2021_5_12_PM__Default_Changelist_.xml	(date 1616542682217)
+@@ -0,0 +1,4 @@
++<changelist name="Uncommitted_changes_before_Update_at_3_23_2021_5_12_PM_[Default_Changelist]" date="1616537567043" recycled="true" deleted="true">
++  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_23_2021_5_12_PM_[Default_Changelist]/shelved.patch" />
++  <option name="DESCRIPTION" value="Uncommitted changes before Update at 3/23/2021 5:12 PM [Default Changelist]" />
++</changelist>
+\ No newline at end of file
+Index: app/src/main/res/drawable/ic_profile_pic.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/ic_profile_pic.xml	(date 1616542656046)
++++ app/src/main/res/drawable/ic_profile_pic.xml	(date 1616542656046)
+@@ -0,0 +1,22 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24"
++    android:tint="?attr/colorControlNormal">
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M15.5,9.5m-1.5,0a1.5,1.5 0,1 1,3 0a1.5,1.5 0,1 1,-3 0"/>
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M8.5,9.5m-1.5,0a1.5,1.5 0,1 1,3 0a1.5,1.5 0,1 1,-3 0"/>
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M15.5,9.5m-1.5,0a1.5,1.5 0,1 1,3 0a1.5,1.5 0,1 1,-3 0"/>
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M8.5,9.5m-1.5,0a1.5,1.5 0,1 1,3 0a1.5,1.5 0,1 1,-3 0"/>
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M11.99,2C6.47,2 2,6.48 2,12s4.47,10 9.99,10C17.52,22 22,17.52 22,12S17.52,2 11.99,2zM12,20c-4.42,0 -8,-3.58 -8,-8s3.58,-8 8,-8 8,3.58 8,8 -3.58,8 -8,8zM12,17.5c2.33,0 4.32,-1.45 5.12,-3.5h-1.67c-0.69,1.19 -1.97,2 -3.45,2s-2.75,-0.81 -3.45,-2L6.88,14c0.8,2.05 2.79,3.5 5.12,3.5z"/>
++</vector>
+Index: app/src/main/res/drawable/ic_fb_like.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/ic_fb_like.xml	(date 1616542656030)
++++ app/src/main/res/drawable/ic_fb_like.xml	(date 1616542656030)
+@@ -0,0 +1,5 @@
++<vector android:height="24dp" android:tint="#0B4189"
++    android:viewportHeight="24" android:viewportWidth="24"
++    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
++    <path android:fillColor="@android:color/white" android:pathData="M1,21h4L5,9L1,9v12zM23,10c0,-1.1 -0.9,-2 -2,-2h-6.31l0.95,-4.57 0.03,-0.32c0,-0.41 -0.17,-0.79 -0.44,-1.06L14.17,1 7.59,7.59C7.22,7.95 7,8.45 7,9v10c0,1.1 0.9,2 2,2h9c0.83,0 1.54,-0.5 1.84,-1.22l3.02,-7.05c0.09,-0.23 0.14,-0.47 0.14,-0.73v-2z"/>
++</vector>
+Index: app/src/main/res/drawable/ic_fb_comment_button.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/ic_fb_comment_button.xml	(date 1616542656030)
++++ app/src/main/res/drawable/ic_fb_comment_button.xml	(date 1616542656030)
+@@ -0,0 +1,5 @@
++<vector android:height="24dp" android:tint="#0B4189"
++    android:viewportHeight="24" android:viewportWidth="24"
++    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
++    <path android:fillColor="@android:color/white" android:pathData="M20,2L4,2c-1.1,0 -2,0.9 -2,2v18l4,-4h14c1.1,0 2,-0.9 2,-2L22,4c0,-1.1 -0.9,-2 -2,-2zM20,16L6,16l-2,2L4,4h16v12zM7,9h2v2L7,11zM11,9h2v2h-2zM15,9h2v2h-2z"/>
++</vector>
+Index: app/src/main/res/drawable/ic_fb_hollow_like.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/ic_fb_hollow_like.xml	(date 1616542656030)
++++ app/src/main/res/drawable/ic_fb_hollow_like.xml	(date 1616542656030)
+@@ -0,0 +1,5 @@
++<vector android:height="24dp" android:tint="#0B4189"
++    android:viewportHeight="24" android:viewportWidth="24"
++    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
++    <path android:fillColor="@android:color/white" android:pathData="M9,21h9c0.83,0 1.54,-0.5 1.84,-1.22l3.02,-7.05c0.09,-0.23 0.14,-0.47 0.14,-0.73v-2c0,-1.1 -0.9,-2 -2,-2h-6.31l0.95,-4.57 0.03,-0.32c0,-0.41 -0.17,-0.79 -0.44,-1.06L14.17,1 7.58,7.59C7.22,7.95 7,8.45 7,9v10c0,1.1 0.9,2 2,2zM9,9l4.34,-4.34L12,10h9v2l-3,7H9V9zM1,9h4v12H1z"/>
++</vector>
+Index: app/src/main/res/values/font_certs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/font_certs.xml	(date 1616542656071)
++++ app/src/main/res/values/font_certs.xml	(date 1616542656071)
+@@ -0,0 +1,17 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <array name="com_google_android_gms_fonts_certs">
++        <item>@array/com_google_android_gms_fonts_certs_dev</item>
++        <item>@array/com_google_android_gms_fonts_certs_prod</item>
++    </array>
++    <string-array name="com_google_android_gms_fonts_certs_dev">
++        <item>
++            MIIEqDCCA5CgAwIBAgIJANWFuGx90071MA0GCSqGSIb3DQEBBAUAMIGUMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEQMA4GA1UEChMHQW5kcm9pZDEQMA4GA1UECxMHQW5kcm9pZDEQMA4GA1UEAxMHQW5kcm9pZDEiMCAGCSqGSIb3DQEJARYTYW5kcm9pZEBhbmRyb2lkLmNvbTAeFw0wODA0MTUyMzM2NTZaFw0zNTA5MDEyMzM2NTZaMIGUMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEQMA4GA1UEChMHQW5kcm9pZDEQMA4GA1UECxMHQW5kcm9pZDEQMA4GA1UEAxMHQW5kcm9pZDEiMCAGCSqGSIb3DQEJARYTYW5kcm9pZEBhbmRyb2lkLmNvbTCCASAwDQYJKoZIhvcNAQEBBQADggENADCCAQgCggEBANbOLggKv+IxTdGNs8/TGFy0PTP6DHThvbbR24kT9ixcOd9W+EaBPWW+wPPKQmsHxajtWjmQwWfna8mZuSeJS48LIgAZlKkpFeVyxW0qMBujb8X8ETrWy550NaFtI6t9+u7hZeTfHwqNvacKhp1RbE6dBRGWynwMVX8XW8N1+UjFaq6GCJukT4qmpN2afb8sCjUigq0GuMwYXrFVee74bQgLHWGJwPmvmLHC69EH6kWr22ijx4OKXlSIx2xT1AsSHee70w5iDBiK4aph27yH3TxkXy9V89TDdexAcKk/cVHYNnDBapcavl7y0RiQ4biu8ymM8Ga/nmzhRKya6G0cGw8CAQOjgfwwgfkwHQYDVR0OBBYEFI0cxb6VTEM8YYY6FbBMvAPyT+CyMIHJBgNVHSMEgcEwgb6AFI0cxb6VTEM8YYY6FbBMvAPyT+CyoYGapIGXMIGUMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEQMA4GA1UEChMHQW5kcm9pZDEQMA4GA1UECxMHQW5kcm9pZDEQMA4GA1UEAxMHQW5kcm9pZDEiMCAGCSqGSIb3DQEJARYTYW5kcm9pZEBhbmRyb2lkLmNvbYIJANWFuGx90071MAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEEBQADggEBABnTDPEF+3iSP0wNfdIjIz1AlnrPzgAIHVvXxunW7SBrDhEglQZBbKJEk5kT0mtKoOD1JMrSu1xuTKEBahWRbqHsXclaXjoBADb0kkjVEJu/Lh5hgYZnOjvlba8Ld7HCKePCVePoTJBdI4fvugnL8TsgK05aIskyY0hKI9L8KfqfGTl1lzOv2KoWD0KWwtAWPoGChZxmQ+nBli+gwYMzM1vAkP+aayLe0a1EQimlOalO762r0GXO0ks+UeXde2Z4e+8S/pf7pITEI/tP+MxJTALw9QUWEv9lKTk+jkbqxbsh8nfBUapfKqYn0eidpwq2AzVp3juYl7//fKnaPhJD9gs=
++        </item>
++    </string-array>
++    <string-array name="com_google_android_gms_fonts_certs_prod">
++        <item>
++            MIIEQzCCAyugAwIBAgIJAMLgh0ZkSjCNMA0GCSqGSIb3DQEBBAUAMHQxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtHb29nbGUgSW5jLjEQMA4GA1UECxMHQW5kcm9pZDEQMA4GA1UEAxMHQW5kcm9pZDAeFw0wODA4MjEyMzEzMzRaFw0zNjAxMDcyMzEzMzRaMHQxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtHb29nbGUgSW5jLjEQMA4GA1UECxMHQW5kcm9pZDEQMA4GA1UEAxMHQW5kcm9pZDCCASAwDQYJKoZIhvcNAQEBBQADggENADCCAQgCggEBAKtWLgDYO6IIrgqWbxJOKdoR8qtW0I9Y4sypEwPpt1TTcvZApxsdyxMJZ2JORland2qSGT2y5b+3JKkedxiLDmpHpDsz2WCbdxgxRczfey5YZnTJ4VZbH0xqWVW/8lGmPav5xVwnIiJS6HXk+BVKZF+JcWjAsb/GEuq/eFdpuzSqeYTcfi6idkyugwfYwXFU1+5fZKUaRKYCwkkFQVfcAs1fXA5V+++FGfvjJ/CxURaSxaBvGdGDhfXE28LWuT9ozCl5xw4Yq5OGazvV24mZVSoOO0yZ31j7kYvtwYK6NeADwbSxDdJEqO4k//0zOHKrUiGYXtqw/A0LFFtqoZKFjnkCAQOjgdkwgdYwHQYDVR0OBBYEFMd9jMIhF1Ylmn/Tgt9r45jk14alMIGmBgNVHSMEgZ4wgZuAFMd9jMIhF1Ylmn/Tgt9r45jk14aloXikdjB0MQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLR29vZ2xlIEluYy4xEDAOBgNVBAsTB0FuZHJvaWQxEDAOBgNVBAMTB0FuZHJvaWSCCQDC4IdGZEowjTAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBAUAA4IBAQBt0lLO74UwLDYKqs6Tm8/yzKkEu116FmH4rkaymUIE0P9KaMftGlMexFlaYjzmB2OxZyl6euNXEsQH8gjwyxCUKRJNexBiGcCEyj6z+a1fuHHvkiaai+KL8W1EyNmgjmyy8AW7P+LLlkR+ho5zEHatRbM/YAnqGcFh5iZBqpknHf1SKMXFh4dd239FJ1jWYfbMDMy3NS5CTMQ2XFI1MvcyUTdZPErjQfTbQe3aDQsQcafEQPD+nqActifKZ0Np0IS9L9kR/wbNvyz6ENwPiTrjV2KRkEjH78ZMcUQXg0L3BYHJ3lc69Vs5Ddf9uUGGMYldX3WfMBEmh/9iFBDAaTCK
++        </item>
++    </string-array>
++</resources>
+Index: app/src/main/res/values/preloaded_fonts.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/preloaded_fonts.xml	(date 1616542656074)
++++ app/src/main/res/values/preloaded_fonts.xml	(date 1616542656074)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <array name="preloaded_fonts" translatable="false">
++        <item>@font/roboto</item>
++        <item>@font/roboto_medium</item>
++    </array>
++</resources>
+Index: app/src/main/res/layout/fragment_home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".MainActivity\">\r\n\r\n    <EditText\r\n        android:id=\"@+id/link\"\r\n        android:layout_width=\"331dp\"\r\n        android:layout_height=\"54dp\"\r\n        android:autofillHints=\"\"\r\n        android:ems=\"10\"\r\n        android:hint=\"@string/enter_link_here\"\r\n        android:inputType=\"text\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:layout_constraintVertical_bias=\"0.054\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/button\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Detect\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/link\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/history\"\r\n        android:layout_width=\"331dp\"\r\n        android:layout_height=\"247dp\"\r\n        android:background=\"#EFC8C8\"\r\n        android:clickable=\"true\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/link\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/link\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/searchHistoryText\"\r\n        app:layout_constraintVertical_bias=\"0.0\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/searchHistoryText\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:text=\"@string/search_history\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/link\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/button\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_home.xml	(revision 5351463ca395cada31d96ef4eddd8274e84b1762)
++++ app/src/main/res/layout/fragment_home.xml	(date 1616542656046)
+@@ -12,6 +12,7 @@
+         android:layout_height="54dp"
+         android:autofillHints=""
+         android:ems="10"
++        android:fontFamily="@font/roboto_medium"
+         android:hint="@string/enter_link_here"
+         android:inputType="text"
+         app:layout_constraintBottom_toBottomOf="parent"
+@@ -24,7 +25,9 @@
+         android:id="@+id/button"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:fontFamily="@font/roboto_medium"
+         android:text="Detect"
++        android:textColor="#FFFFFF"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/link" />
+@@ -35,6 +38,7 @@
+         android:layout_height="247dp"
+         android:background="#EFC8C8"
+         android:clickable="true"
++        android:fontFamily="@font/roboto_medium"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="@+id/link"
+         app:layout_constraintHorizontal_bias="0.0"
+@@ -47,6 +51,7 @@
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="20dp"
++        android:fontFamily="@font/roboto_medium"
+         android:text="@string/search_history"
+         android:textStyle="bold"
+         app:layout_constraintStart_toStartOf="@+id/link"
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <color name=\"colorPrimary\">#6200EE</color>\r\n    <color name=\"colorPrimaryDark\">#3700B3</color>\r\n    <color name=\"colorAccent\">#03DAC5</color>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/colors.xml	(revision 5351463ca395cada31d96ef4eddd8274e84b1762)
++++ app/src/main/res/values/colors.xml	(date 1616542656067)
+@@ -3,4 +3,11 @@
+     <color name="colorPrimary">#6200EE</color>
+     <color name="colorPrimaryDark">#3700B3</color>
+     <color name="colorAccent">#03DAC5</color>
++
++    <color name="black">#000000</color>
++    <color name="light_grey">#e4e4e4</color>
++    <color name="grey">#8b8b8b</color>
++    <color name="dark_grey">#696969</color>
++    <color name="white">#FFFFFF</color>
++
+ </resources>
+\ No newline at end of file
