@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent);
                 return true;
             case R.id.help:
+                Intent i = new Intent(MainActivity.this, HelpActivity.class);
+                startActivity(i);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
