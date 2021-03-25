@@ -45,10 +45,11 @@ public class MainActivity extends AppCompatActivity{
                             Log.d(TAG, "onNavigationItemSelected: " + selectedFragment);
                             break;
                         case R.id.Facebook_nav:
-                            selectedFragment = new FacebookFragment();
+                            selectedFragment = new NewsFragment();
                             Log.d(TAG, "onNavigationItemSelected: " + selectedFragment);
                             break;
                         case R.id.Twitter_nav:
+                            //Changed from TwitterFragment to NewsFragment
                             selectedFragment = new TwitterFragment();
                             break;
                     }
