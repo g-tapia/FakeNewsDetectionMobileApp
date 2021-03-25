@@ -7,8 +7,10 @@
         android:title="Home" />
     <item
         android:id="@+id/Facebook_nav"
-        android:title="Facebook" />
+        android:icon="@drawable/ic_article"
+        android:title="News" />
     <item
         android:id="@+id/Twitter_nav"
-        android:title="Twitter" />
+        android:icon="@drawable/ic_social"
+        android:title="Social" />
 </menu>

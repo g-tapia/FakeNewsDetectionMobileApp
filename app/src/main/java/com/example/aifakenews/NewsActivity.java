@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -43,7 +44,11 @@ import java.util.stream.Collectors;
 //api key = ef9b47f477454be1bc1f57a233b4e2fa
 public class NewsActivity extends AppCompatActivity {
 
-    //Global variables for later user=
+
+    private Toolbar toolbar;
+
+
+    //Global variables for later use
     static final String NEWS_FROM_SERVICE = "NEWS_FROM_SERVICE";
     static final String ARTICLE_FROM_SERVICE = "ARTICLE_FROM_SERVICE";
     private DrawerLayout mDrawerLayout;
@@ -70,7 +75,17 @@ public class NewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news);
 
         //Establish layout elements
-        mDrawerLayout = findViewById(R.id.drawer_layout); // <== Important!
+
+//        //Setup toolbar to replace action bar
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//
+//        //Display an Up Icon (to be replaced with hamburger later)
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Find Drawer view
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout); // <== Important!
+
         mDrawerList = findViewById(R.id.left_drawer); // <== Important!
         mDrawerToggle = new ActionBarDrawerToggle(   // <== Important!
                 this,
