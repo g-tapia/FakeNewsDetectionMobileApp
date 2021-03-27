@@ -53,6 +53,7 @@ public class NewsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragment_layout = inflater.inflate(R.layout.news_articles, container, false);
 
+
         //**TESTER CODE BELOW
         setHasOptionsMenu(true);
 
@@ -140,12 +141,13 @@ public class NewsFragment extends Fragment {
     }
 
 
-    //Special menu to include drawer layout
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.news_menu, menu);
-    }
+//    //Special menu to include drawer layout
+//    @Override
+//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+//        super.onCreateOptionsMenu(menu, inflater);
+//        inflater.inflate(R.menu.menu, menu);
+//        //inflater.inflate(R.menu.news_menu, menu);
+//    }
 
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {

@@ -44,12 +44,11 @@ public class MainActivity extends AppCompatActivity{
                             selectedFragment = new HomeFragment();
                             Log.d(TAG, "onNavigationItemSelected: " + selectedFragment);
                             break;
-                        case R.id.Facebook_nav:
-                            selectedFragment = new NewsFragment();
+                        case R.id.News_nav:
+                            selectedFragment = new NewsTabFragment();
                             Log.d(TAG, "onNavigationItemSelected: " + selectedFragment);
                             break;
                         case R.id.Twitter_nav:
-                            //Changed from TwitterFragment to NewsFragment
                             selectedFragment = new TwitterFragment();
                             break;
                     }
@@ -76,6 +75,10 @@ public class MainActivity extends AppCompatActivity{
                 Intent i = new Intent(MainActivity.this, HelpActivity.class);
                 startActivity(i);
                 return true;
+//            case R.id.news_menu:
+//                Intent j = new Intent(MainActivity.this, NewsActivity.class);
+//                startActivity(j);
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

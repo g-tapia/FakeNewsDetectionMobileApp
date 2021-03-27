@@ -4,6 +4,7 @@ package com.example.aifakenews;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -74,14 +75,15 @@ public class NewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
-        //Establish layout elements
+        //Attempt at fixing action bar issues - Doesn't work
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-//        //Setup toolbar to replace action bar
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        //Display an Up Icon (to be replaced with hamburger later)
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer_menu);
+
+        //Establish layout elements
 
         //Find Drawer view
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout); // <== Important!
