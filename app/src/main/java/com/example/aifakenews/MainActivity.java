@@ -47,6 +47,10 @@ public class MainActivity extends AppCompatActivity{
                         case R.id.News_nav:
                             selectedFragment = new NewsTabFragment();
                             Log.d(TAG, "onNavigationItemSelected: " + selectedFragment);
+                            //Below code jumps straight to activity
+//                            Intent j = new Intent(MainActivity.this, NewsActivity.class);
+//                            startActivity(j);
+
                             break;
                         case R.id.Twitter_nav:
                             selectedFragment = new TwitterFragment();
@@ -75,10 +79,10 @@ public class MainActivity extends AppCompatActivity{
                 Intent i = new Intent(MainActivity.this, HelpActivity.class);
                 startActivity(i);
                 return true;
-//            case R.id.news_menu:
-//                Intent j = new Intent(MainActivity.this, NewsActivity.class);
-//                startActivity(j);
-//                return true;
+            case R.id.drawer_menu:
+                Intent j = new Intent(MainActivity.this, NewsActivity.class);
+                startActivity(j);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

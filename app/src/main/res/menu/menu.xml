@@ -12,4 +12,10 @@
         android:icon="@drawable/ic_action_help_outline"
         android:title="Help"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/drawer_menu"
+        android:icon="@drawable/ic_drawer_menu"
+        android:title="News Sources"
+        app:showAsAction="ifRoom"/>
 </menu>

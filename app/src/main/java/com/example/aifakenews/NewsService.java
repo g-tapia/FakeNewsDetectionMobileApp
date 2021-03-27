@@ -104,6 +104,7 @@ public class NewsService extends Service{
                 }
             }).start();
 
+
             for (int i = 0; i < jsonArticles.length() ; i++) {
                 JSONObject jsonArticle = (JSONObject) jsonArticles.get(i);
                 String author = "";

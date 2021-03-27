@@ -2,6 +2,8 @@ package com.example.aifakenews;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,4 +17,11 @@ public class TwitterFragment extends Fragment {
         return inflater.inflate(R.layout.twitter_login_fragment, container, false);
 
     }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item=menu.findItem(R.id.drawer_menu);
+        item.setVisible(false);
+    }
+
 }

@@ -75,14 +75,6 @@ public class NewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
-        //Attempt at fixing action bar issues - Doesn't work
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer_menu);
-
         //Establish layout elements
 
         //Find Drawer view

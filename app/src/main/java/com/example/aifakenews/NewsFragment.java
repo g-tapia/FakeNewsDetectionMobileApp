@@ -55,7 +55,7 @@ public class NewsFragment extends Fragment {
 
 
         //**TESTER CODE BELOW
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true);
 
         Bundle args = getArguments();
 

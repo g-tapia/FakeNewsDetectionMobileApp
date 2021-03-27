@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,6 +31,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     @Nullable
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         editText = view.findViewById(R.id.link);
@@ -68,6 +71,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         });
 
         return view;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item=menu.findItem(R.id.drawer_menu);
+        if(item!=null)
+            item.setVisible(false);
     }
 
     @Override
