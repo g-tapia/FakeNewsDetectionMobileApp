@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class FacebookNewsFeed extends AppCompatActivity {
+public class SocialNewsFeed extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_facebook_news_feed);
+        setContentView(R.layout.social_news_feed);
     }
 }
