@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/link"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/link1"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="331dp"
         android:layout_height="54dp"
         android:autofillHints=""
@@ -15,11 +16,22 @@
         android:fontFamily="@font/roboto_medium"
         android:hint="@string/enter_link_here"
         android:inputType="text"
+        android:textColorHint="#6200EE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.054" />
+        app:layout_constraintVertical_bias="0.054"
+        app:endIconMode="clear_text">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/button"
@@ -30,21 +42,30 @@
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/link" />
+        app:layout_constraintTop_toBottomOf="@+id/link1" />
 
-    <TextView
-        android:id="@+id/history"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/history1"
         android:layout_width="331dp"
         android:layout_height="247dp"
-        android:background="#EFC8C8"
         android:clickable="true"
         android:fontFamily="@font/roboto_medium"
+        android:hint="Search History"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/link"
+        app:layout_constraintEnd_toEndOf="@+id/link1"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/link"
+        app:layout_constraintStart_toStartOf="@+id/link1"
         app:layout_constraintTop_toBottomOf="@+id/searchHistoryText"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/searchHistoryText"
@@ -54,7 +75,9 @@
         android:fontFamily="@font/roboto_medium"
         android:text="@string/search_history"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/link"
+        app:layout_constraintStart_toStartOf="@+id/link1"
         app:layout_constraintTop_toBottomOf="@+id/button" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

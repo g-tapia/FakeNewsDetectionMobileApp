@@ -20,12 +20,14 @@
         <activity android:name=".TwitterLoginActivity" />
         <activity android:name=".FacebookActivity" />
         <activity android:name=".AboutActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name="com.twitter.sdk.android.core.identity.OAuthActivity" />
 
