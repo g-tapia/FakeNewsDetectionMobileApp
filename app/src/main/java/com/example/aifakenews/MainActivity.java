@@ -89,25 +89,4 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    /*
-    public void onClick(View v){
-        try {
-            Log.d(TAG, "onClick: The link is: " + editText.getText().toString());
-            history.setText(editText.getText().toString() + "\n" + history.getText().toString() + "\n");
-            doRunnable(editText.getText().toString());
-        }catch (Exception e){
-            Log.d(TAG, "onClick: " + editText);
-        }
-    }
-
-    public void doRunnable(String url){
-        LinkRunnable linkRunnable = new LinkRunnable(this, url);
-        new Thread(linkRunnable).start();
-    }
-
-     */
-
-
-
-
 }
