@@ -1,6 +1,7 @@
 package com.example.aifakenews;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,6 +31,8 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,8 +45,9 @@ import me.angrybyte.goose.ContentExtractor;
 
 public class HomeFragment extends Fragment implements View.OnClickListener{
     private static final String TAG = "HomeFragment";
-    EditText editText;
-    TextView history;
+    TextInputEditText editText;
+    TextInputLayout history1;
+    TextInputEditText history;
     Button button;
     @Nullable
     @Override
@@ -52,12 +57,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         editText = view.findViewById(R.id.link);
         history = view.findViewById(R.id.history);
+        history1 = view.findViewById(R.id.history1);
         button = view.findViewById(R.id.button);
         button.setOnClickListener(this);
 
         history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
+                InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                mgr.hideSoftInputFromWindow(history.getWindowToken(), 0);
+
                 if (history.getText().toString().equals("")){
                     Toast.makeText(getActivity(), "History is empty", Toast.LENGTH_SHORT).show();
                 }else{
@@ -86,6 +95,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+        history1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                //Toast.makeText(getActivity(), "LOL", Toast.LENGTH_SHORT).show();
+                InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                mgr.hideSoftInputFromWindow(history1.getWindowToken(), 0);
+
+            }
+        });
+
         return view;
     }
 
@@ -95,6 +114,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         if(item!=null)
             item.setVisible(false);
     }
+
 
     @Override
     public void onClick(View view) {
@@ -140,6 +160,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                         @Override
                         public void onResponse(String response) {
                             Log.i("VOLLEY", response);
+                            Log.d(TAG, "onResponse: " + response);
                         }
                     }, new Response.ErrorListener() {
                         @Override
