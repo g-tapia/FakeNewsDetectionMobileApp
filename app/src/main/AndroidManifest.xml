@@ -17,7 +17,7 @@
         <activity android:name=".NewsActivity"></activity>
         <activity android:name=".HelpActivity" />
         <activity android:name=".FacebookNewsFeed" />
-        <activity android:name=".TwitterLoginActivity" />
+        <activity android:name=".SocialLoginActivity" />
         <activity android:name=".FacebookActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".MainActivity"
