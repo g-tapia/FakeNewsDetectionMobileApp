@@ -1,8 +1,12 @@
 Step 1:
 Go to the model_save folder and follow the instructions there.
 
+Step 1.1:
+If you don't have Python, install it using Miniconda: https://docs.conda.io/en/latest/miniconda.html.
+After that, install tensorflow: pip install tensorflow
+
 Step 2:
-Run these commands in the current folder:
+Run these commands in the server folder:
 [WINDOWS]
 set FLASK_APP=server.py
 python -m flask run
