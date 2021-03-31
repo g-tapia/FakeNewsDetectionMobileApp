@@ -6,59 +6,10 @@
     android:layout_height="match_parent"
     android:background="#6200EE">
 
-    <EditText
-        android:id="@+id/editTextTextMultiLine6"
-        android:layout_width="408dp"
-        android:layout_height="72dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:text="At the main menu, you have a search bar at the top, with three buttons below. Lets go over these:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine4" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName2"
-        android:layout_width="241dp"
-        android:layout_height="49dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="How to use application:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.011"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AppDesc" />
-
-    <EditText
-        android:id="@+id/editTextTextMultiLine5"
-        android:layout_width="407dp"
-        android:layout_height="64dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:text="Having trouble using the app? No problem! we are here to help!"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
-
-    <EditText
-        android:id="@+id/editTextTextMultiLine4"
-        android:layout_width="410dp"
-        android:layout_height="131dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:text="I'm sure you're aware already! the main purpose of our app is to fight fake news! that being said, we implemented a couple features to help with this. Below, we will go over our app and give you an overview on how to use it."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine5" />
-
     <TextView
         android:id="@+id/AppDesc"
-        android:layout_width="233dp"
-        android:layout_height="42dp"
+        android:layout_width="291dp"
+        android:layout_height="45dp"
         android:text="This is an app that uses an AI model to detect if a link contains fake news"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
@@ -84,51 +35,22 @@
         android:id="@+id/AppContributors"
         android:layout_width="240dp"
         android:layout_height="43dp"
-        android:layout_marginTop="688dp"
+        android:layout_marginTop="684dp"
         android:text="©2021, Franklin Lu, Alexis Edwards, George Tapia, Truong Pham"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/AppDesc"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="@+id/AppDesc"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextTextMultiLine"
-        android:layout_width="401dp"
-        android:layout_height="104dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:text="(Search Bar)- the search bar takes the input of an article URL that you would like our system to determine if it comes from a credible source or not."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine6" />
-
-    <EditText
-        android:id="@+id/editTextTextMultiLine2"
-        android:layout_width="410dp"
-        android:layout_height="167dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:text='(Facebook/Twitter Buttons)- clicking on these buttons, redirects you to a different page where you can choose to log in to these platforms through our app. Simply, click "continue to the site" and enter your login credentials. Our AI will help fight fake news while you are surfing through Facebook/Twitter!'
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
-
-    <EditText
-        android:id="@+id/editTextTextMultiLine3"
-        android:layout_width="409dp"
-        android:layout_height="66dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:text="(Home Button)- this button takes you back to the main page."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine2" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/FakeNews"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="106dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
