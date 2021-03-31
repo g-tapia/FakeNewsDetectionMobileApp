@@ -49,16 +49,9 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/FakeNews"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="106dp" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_action_fakenews"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="106dp" />
+        tools:layout_editor_absoluteY="110dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
