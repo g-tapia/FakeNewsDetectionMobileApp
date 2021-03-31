@@ -22,10 +22,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
@@ -37,7 +39,12 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import me.angrybyte.goose.Article;
 import me.angrybyte.goose.Configuration;
@@ -148,13 +155,47 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     Toast.makeText(getActivity(), "Invalid URL", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "run: " + details);
                 }
+//                try {
+//                    URL url = new URL("http://1.55.210.23:5000/test1");
+//                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+//                    con.setRequestMethod("POST");
+//                    con.setRequestProperty("Content-Type", "application/json; utf-8");
+//                    con.setRequestProperty("Accept", "application/json");
+//                    con.setDoOutput(true);
+//                    Log.d(TAG, "run: con stuff done");
+//                    String jsonInputString = "{ 'news' : some news}";
+//
+//                    try (OutputStream os = con.getOutputStream()) {
+//                        byte[] input = jsonInputString.getBytes("utf-8");
+//                        Log.d(TAG, "run: input done");
+//                        os.write(input, 0, input.length);
+//                    }catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                    Log.d(TAG, "run: string stuff done");
+//                    try (BufferedReader br = new BufferedReader(
+//                            new InputStreamReader(con.getInputStream(), "utf-8"))) {
+//                        Log.d(TAG, "run: about to send the string");
+//                        StringBuilder response = new StringBuilder();
+//                        String responseLine = null;
+//                        while ((responseLine = br.readLine()) != null) {
+//                            response.append(responseLine.trim());
+//                        }
+//                        Log.d(TAG, "run: "+response.toString());
+//                    }catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }catch (Exception e) {
+//                    e.printStackTrace();
+//                }
 
                 try {
                     RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-                    String URL = "http://...";
+                    String URL = "http://192.168.1.38:5000/data";
                     JSONObject jsonBody = new JSONObject();
-                    jsonBody.put("ArticleText", details);
+                    jsonBody.put("news", details);
                     final String requestBody = jsonBody.toString();
+                    Log.d(TAG, "run: json stuff done");
 
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                         @Override
@@ -170,11 +211,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     }) {
                         @Override
                         public String getBodyContentType() {
+                            Log.d(TAG, "run: get body content type");
                             return "application/json; charset=utf-8";
                         }
 
                         @Override
                         public byte[] getBody() throws AuthFailureError {
+                            Log.d(TAG, "run: get body");
                             try {
                                 return requestBody == null ? null : requestBody.getBytes("utf-8");
                             } catch (UnsupportedEncodingException uee) {
@@ -185,15 +228,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
                         @Override
                         protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                            Log.d(TAG, "run: parse start");
                             String responseString = "";
                             if (response != null) {
-                                responseString = String.valueOf(response.statusCode);
+                                responseString = String.valueOf(response);
                                 // can get more details such as response.headers
                             }
-                            return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                            Log.d(TAG, "run:" + responseString);
+//                            return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                            return super.parseNetworkResponse(response);
                         }
                     };
-
+                    int socketTimeout = 10000;//30 seconds - change to what you want
+                    RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+                    stringRequest.setRetryPolicy(policy);
+                    Log.d(TAG, "run: requestQueue adding");
                     requestQueue.add(stringRequest);
                 } catch (JSONException e) {
                     e.printStackTrace();
