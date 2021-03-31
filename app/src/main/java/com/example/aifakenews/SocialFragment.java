@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class SocialFragment extends Fragment {
 
 
+    private static final String TAG = "SocialFragment";
     EditText emailID, password;
     Button loginBtn, signUpBtn;
     FirebaseAuth mFirebaseAuth;
@@ -75,9 +77,27 @@ public class SocialFragment extends Fragment {
                 } else if (email.isEmpty() && pwd.isEmpty()) {
                     Toast.makeText(getActivity(), "Fields are empty!", Toast.LENGTH_SHORT).show();
                 } else if (!(email.isEmpty() && pwd.isEmpty())) {
+
+//                    mFirebaseAuth.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<AuthResult> task) {
+//                            Log.d(TAG, "signInWithEmailAndPassword:onComplete:" + task.isSuccessful());
+//                            if (!task.isSuccessful()) {
+//                                // Notify user of failure
+//                            }
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Log.d("HELLO", e.getLocalizedMessage());
+//                            //notifyUser(e.getLocalizedMessage());
+//                        }
+//                    });
+
                     mFirebaseAuth.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                             if (!task.isSuccessful()) {
                                 Toast.makeText(getActivity(), "Login Unsuccessful. Please try again.", Toast.LENGTH_SHORT).show();
                             } else {
@@ -86,6 +106,8 @@ public class SocialFragment extends Fragment {
                             }
                         }
                     });
+
+
                 } else {
                     Toast.makeText(getActivity(), "Error Occurred!", Toast.LENGTH_SHORT).show();
                 }
@@ -102,15 +124,31 @@ public class SocialFragment extends Fragment {
                     emailID.setError("Please provide an email address");
                     emailID.requestFocus();
                 } else if (pwd.isEmpty()) {
-                    emailID.setError("Please provide a password");
-                    emailID.requestFocus();
+                    password.setError("Please provide a password");
+                    password.requestFocus();
                 } else if (email.isEmpty() && pwd.isEmpty()) {
                     Toast.makeText(getActivity(), "Fields are empty!", Toast.LENGTH_SHORT).show();
                 } else if (!(email.isEmpty() && pwd.isEmpty())) {
                     //Create username and password
                     mFirebaseAuth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<AuthResult> task) {
+//                            Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+//                            if (!task.isSuccessful()) {
+//                                // Notify user of failure
+//                            }
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Log.d("HELLO", e.getLocalizedMessage());
+//                            //notifyUser(e.getLocalizedMessage());
+//                        }
+//                    });
+
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                             if (task.isSuccessful()) {
                                 Toast.makeText(getActivity(), "Sign Up unsuccessful, Please try again", Toast.LENGTH_SHORT).show();
                             } else {
@@ -118,6 +156,7 @@ public class SocialFragment extends Fragment {
                             }
                         }
                     });
+
                 } else {
                     Toast.makeText(getActivity(), "Error Occurred!", Toast.LENGTH_SHORT).show();
                 }

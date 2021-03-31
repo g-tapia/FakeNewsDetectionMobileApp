@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.android.gms.tasks.OnFailureListener;
 
 
 public class SocialLoginActivity extends AppCompatActivity {
@@ -66,25 +67,42 @@ public class SocialLoginActivity extends AppCompatActivity {
                     emailID.requestFocus();
                 }
                 else if (pwd.isEmpty()) {
-                    emailID.setError("Please provide a password");
-                    emailID.requestFocus();
+                    password.setError("Please provide a password");
+                    password.requestFocus();
                 }
                 else if (email.isEmpty() && pwd.isEmpty()) {
                     Toast.makeText(SocialLoginActivity.this, "Fields are empty!", Toast.LENGTH_SHORT).show();
                 }
                 else if (!(email.isEmpty() && pwd.isEmpty())){
+
                     mFirebaseAuth.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(SocialLoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                    if (!task.isSuccessful()) {
+                                        // Notify user of failure
+                                    }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(SocialLoginActivity.this, "Login Unsuccessful. Please try again.", Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                Intent j = new Intent(SocialLoginActivity.this, SocialNewsFeed.class);
-                                startActivity(j);
-                            }
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("HELLO", e.getLocalizedMessage());
+                            //notifyUser(e.getLocalizedMessage());
                         }
                     });
+
+//                    mFirebaseAuth.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(SocialLoginActivity.this, new OnCompleteListener<AuthResult>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<AuthResult> task) {
+//                            if (!task.isSuccessful()) {
+//                                Toast.makeText(SocialLoginActivity.this, "Login Unsuccessful. Please try again.", Toast.LENGTH_SHORT).show();
+//                            }
+//                            else {
+//                                Intent j = new Intent(SocialLoginActivity.this, SocialNewsFeed.class);
+//                                startActivity(j);
+//                            }
+//                        }
+//                    });
                 }
                 else {
                     Toast.makeText(SocialLoginActivity.this, "Error Occurred!", Toast.LENGTH_SHORT).show();
@@ -126,6 +144,7 @@ public class SocialLoginActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(SocialLoginActivity.this, "Error Occurred!", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -136,5 +155,6 @@ public class SocialLoginActivity extends AppCompatActivity {
         super.onStart();
         mFirebaseAuth.addAuthStateListener(mAuthListener);
     }
+
 
 }
