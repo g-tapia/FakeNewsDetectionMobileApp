@@ -1,0 +1,107 @@
+Index: app/src/main/java/com/example/aifakenews/SocialFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.aifakenews;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.Menu;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\npublic class SocialFragment extends Fragment {\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){\r\n        return inflater.inflate(R.layout.social_login, container, false);\r\n\r\n    }\r\n\r\n    @Override\r\n    public void onPrepareOptionsMenu(Menu menu) {\r\n        MenuItem item=menu.findItem(R.id.drawer_menu);\r\n        item.setVisible(false);\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/aifakenews/SocialFragment.java	(revision bfec95c026a88aea2f7132e784e2b452c5d229df)
++++ app/src/main/java/com/example/aifakenews/SocialFragment.java	(date 1616974979331)
+@@ -1,21 +1,46 @@
+ package com.example.aifakenews;
+ 
++import android.content.Intent;
+ import android.os.Bundle;
++import android.util.Log;
+ import android.view.LayoutInflater;
+ import android.view.Menu;
+ import android.view.MenuItem;
+ import android.view.View;
+ import android.view.ViewGroup;
++import android.widget.Button;
++import android.widget.Toast;
+ 
++import androidx.annotation.NonNull;
+ import androidx.annotation.Nullable;
+ import androidx.fragment.app.Fragment;
+ 
++import com.google.android.gms.tasks.OnCompleteListener;
++import com.google.android.gms.tasks.Task;
++import com.google.firebase.auth.AuthResult;
++
+ public class SocialFragment extends Fragment {
++    private static final String TAG = "SocialFragment";
++    Button loginBtn;
++
+     @Nullable
+     @Override
+     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+-        return inflater.inflate(R.layout.social_login, container, false);
++        View view = inflater.inflate(R.layout.social_login, container, false);
++
++        loginBtn = view.findViewById(R.id.button2);
+ 
++
++        loginBtn.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                Log.d(TAG, "onClick: ");
++
++            }
++        });
++
++
++        return view;
+     }
+ 
+     @Override
+Index: app/src/main/java/com/example/aifakenews/SocialLoginActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.aifakenews;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\n//Firebase import\r\nimport com.google.android.gms.tasks.OnCompleteListener;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.firebase.auth.AuthResult;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.auth.FirebaseUser;\r\n\r\n\r\npublic class SocialLoginActivity extends AppCompatActivity {\r\n\r\n    EditText emailID, password;\r\n    Button loginBtn, signUpBtn;\r\n    FirebaseAuth mFirebaseAuth;\r\n    private FirebaseAuth.AuthStateListener mAuthListener;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.social_login);\r\n\r\n\r\n        //Assign global variables\r\n        mFirebaseAuth = FirebaseAuth.getInstance();\r\n        emailID = findViewById(R.id.editTextTextEmailAddress);\r\n        password = findViewById(R.id.editTextTextPassword);\r\n        loginBtn = findViewById(R.id.button2);\r\n        signUpBtn = findViewById(R.id.button3);\r\n\r\n        mAuthListener = new FirebaseAuth.AuthStateListener() {\r\n            @Override\r\n            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {\r\n                FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();\r\n                if (mFirebaseUser != null) {\r\n                    Toast.makeText(SocialLoginActivity.this, \"You are logged in\", Toast.LENGTH_SHORT).show();\r\n                    Intent i = new Intent(SocialLoginActivity.this, SocialNewsFeed.class);\r\n                    startActivity(i);\r\n                }\r\n                else {\r\n                    Toast.makeText(SocialLoginActivity.this, \"Please Login\", Toast.LENGTH_SHORT).show();\r\n                }\r\n            }\r\n        };\r\n\r\n        loginBtn.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Log.d(\"HELLO\", \"Register Button Clicked\");\r\n                String email = emailID.getText().toString();\r\n                String pwd = password.getText().toString();\r\n\r\n                if(email.isEmpty()) {\r\n                    emailID.setError(\"Please provide an email address\");\r\n                    emailID.requestFocus();\r\n                }\r\n                else if (pwd.isEmpty()) {\r\n                    emailID.setError(\"Please provide a password\");\r\n                    emailID.requestFocus();\r\n                }\r\n                else if (email.isEmpty() && pwd.isEmpty()) {\r\n                    Toast.makeText(SocialLoginActivity.this, \"Fields are empty!\", Toast.LENGTH_SHORT).show();\r\n                }\r\n                else if (!(email.isEmpty() && pwd.isEmpty())){\r\n                    mFirebaseAuth.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(SocialLoginActivity.this, new OnCompleteListener<AuthResult>() {\r\n                        @Override\r\n                        public void onComplete(@NonNull Task<AuthResult> task) {\r\n                            if (!task.isSuccessful()) {\r\n                                Toast.makeText(SocialLoginActivity.this, \"Login Unsuccessful. Please try again.\", Toast.LENGTH_SHORT).show();\r\n                            }\r\n                            else {\r\n                                Intent j = new Intent(SocialLoginActivity.this, SocialNewsFeed.class);\r\n                                startActivity(j);\r\n                            }\r\n                        }\r\n                    });\r\n                }\r\n                else {\r\n                    Toast.makeText(SocialLoginActivity.this, \"Error Occurred!\", Toast.LENGTH_SHORT).show();\r\n                }\r\n            }\r\n        });\r\n\r\n        signUpBtn.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                String email = emailID.getText().toString();\r\n                String pwd = password.getText().toString();\r\n\r\n                if(email.isEmpty()) {\r\n                    emailID.setError(\"Please provide an email address\");\r\n                    emailID.requestFocus();\r\n                }\r\n                else if (pwd.isEmpty()) {\r\n                    emailID.setError(\"Please provide a password\");\r\n                    emailID.requestFocus();\r\n                }\r\n                else if (email.isEmpty() && pwd.isEmpty()) {\r\n                    Toast.makeText(SocialLoginActivity.this, \"Fields are empty!\", Toast.LENGTH_SHORT).show();\r\n                }\r\n                else if (!(email.isEmpty() && pwd.isEmpty())){\r\n                    //Create username and password\r\n                    mFirebaseAuth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(SocialLoginActivity.this, new OnCompleteListener<AuthResult>() {\r\n                        @Override\r\n                        public void onComplete(@NonNull Task<AuthResult> task) {\r\n                            if (task.isSuccessful()) {\r\n                                Toast.makeText(SocialLoginActivity.this, \"Sign Up unsuccessful, Please try again\", Toast.LENGTH_SHORT).show();\r\n                            }\r\n                            else {\r\n                                startActivity(new Intent(SocialLoginActivity.this, SocialNewsFeed.class));\r\n                            }\r\n                        }\r\n                    });\r\n                }\r\n                else {\r\n                    Toast.makeText(SocialLoginActivity.this, \"Error Occurred!\", Toast.LENGTH_SHORT).show();\r\n                }\r\n            }\r\n        });\r\n\r\n    }\r\n\r\n    @Override\r\n    protected void onStart() {\r\n        super.onStart();\r\n        mFirebaseAuth.addAuthStateListener(mAuthListener);\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/aifakenews/SocialLoginActivity.java	(revision bfec95c026a88aea2f7132e784e2b452c5d229df)
++++ app/src/main/java/com/example/aifakenews/SocialLoginActivity.java	(date 1616974880176)
+@@ -19,19 +19,18 @@
+ import com.google.firebase.auth.FirebaseUser;
+ 
+ 
+-public class SocialLoginActivity extends AppCompatActivity {
++public class SocialLoginActivity extends AppCompatActivity implements View.OnClickListener{
+ 
+     EditText emailID, password;
+     Button loginBtn, signUpBtn;
+     FirebaseAuth mFirebaseAuth;
+     private FirebaseAuth.AuthStateListener mAuthListener;
+-
++    private static final String TAG = "SocialLoginActivity";
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.social_login);
+ 
+-
+         //Assign global variables
+         mFirebaseAuth = FirebaseAuth.getInstance();
+         emailID = findViewById(R.id.editTextTextEmailAddress);
+@@ -57,7 +56,8 @@
+         loginBtn.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+-                Log.d("HELLO", "Register Button Clicked");
++                Log.d(TAG, "onClick: ");
++                Log.d(TAG, "Register Button Clicked");
+                 String email = emailID.getText().toString();
+                 String pwd = password.getText().toString();
+ 
+@@ -137,4 +137,8 @@
+         mFirebaseAuth.addAuthStateListener(mAuthListener);
+     }
+ 
++    @Override
++    public void onClick(View view) {
++        Log.d(TAG, "onClick: yo");
++    }
+ }

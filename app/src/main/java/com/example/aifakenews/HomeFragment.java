@@ -202,6 +202,40 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                         public void onResponse(String response) {
                             Log.i("VOLLEY", response);
                             Log.d(TAG, "onResponse: " + response);
+                            try {
+                                String[] parsed = response.split("\\s+");
+                                if (parsed[0].equalsIgnoreCase("Real")){
+                                    // Simple dialog - no buttons.
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                                    builder.setMessage("The news source you entered is REAL with " + parsed[2] + " accuracy");
+                                    builder.setTitle("Real News!");
+
+                                    //AlertDialog dialog = builder.create();
+                                    builder.show();
+                                }else if (parsed[0].equalsIgnoreCase("Fake")){
+                                    // Simple dialog - no buttons.
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                                    builder.setMessage("The news source you entered is FAKE with " + parsed[2] + " accuracy");
+                                    builder.setTitle("Fake News!");
+
+                                    //AlertDialog dialog = builder.create();
+                                    builder.show();
+                                }else{
+                                    // Simple dialog - no buttons.
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                                    builder.setMessage("There was an error parsing the server response.");
+                                    builder.setTitle("Error!");
+
+                                    //AlertDialog dialog = builder.create();
+                                    builder.show();
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+
                         }
                     }, new Response.ErrorListener() {
                         @Override
