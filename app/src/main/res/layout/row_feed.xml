@@ -2,7 +2,9 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/relLayout"
@@ -10,7 +12,8 @@
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <ImageView
             android:id="@+id/imgView_profile_pic"
@@ -29,7 +32,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textView_"
+                android:id="@+id/textView_Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Facebook Friend1"
@@ -61,20 +64,20 @@
         android:textColor="@color/black"
         android:textSize="16sp"/>
 
-    <ImageView
-        android:id="@+id/imageView_postPic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView_status"
-        android:layout_marginTop="5dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:visibility="gone"
-        android:src="@drawable/ic_launcher_background"/>
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView_postPic"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/textView_status"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:adjustViewBounds="true"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        android:visibility="gone"-->
+<!--        android:src="@drawable/ic_launcher_background"/>-->
 
     <RelativeLayout
         android:id="@+id/relLayout2"
-        android:layout_below="@id/imageView_postPic"
+        android:layout_below="@id/textView_status"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"

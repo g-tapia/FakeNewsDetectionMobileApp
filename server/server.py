@@ -34,7 +34,7 @@ def parse_request():
     news = review_cleaning(news)
     
     news_input = news_to_input(news)
-    prediction = fakenews_ai.predict(news_input)[0]
+    prediction = fakenews_ai.predict(news_input)[0][0]
     output = prediction > 0.5
     
     if output is True:
