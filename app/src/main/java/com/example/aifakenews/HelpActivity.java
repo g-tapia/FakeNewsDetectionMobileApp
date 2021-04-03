@@ -15,7 +15,7 @@ public class HelpActivity extends AppCompatActivity {
         TextView mTitleWindow = (TextView) findViewById(R.id.titleWindow);
         TextView mMessageWindow = (TextView) findViewById(R.id.messageWindow);
 
-        mTitleWindow.setText("(\t\tAbout Page)\n\nThis is an app that uses an AI model to detect if a link contains fake news\n\nHow to use application:\n\n");
+        mTitleWindow.setText("\t\t(About Page)\n\nThis is an app that uses an AI model to detect if a link contains fake news\n\nHow to use application:\n\n");
 
         StringBuilder stringBuilder = new StringBuilder();
 
