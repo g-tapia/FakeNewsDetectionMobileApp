@@ -155,133 +155,116 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     Toast.makeText(getActivity(), "Invalid URL", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "run: " + details);
                 }
-//                try {
-//                    URL url = new URL("http://1.55.210.23:5000/test1");
-//                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-//                    con.setRequestMethod("POST");
-//                    con.setRequestProperty("Content-Type", "application/json; utf-8");
-//                    con.setRequestProperty("Accept", "application/json");
-//                    con.setDoOutput(true);
-//                    Log.d(TAG, "run: con stuff done");
-//                    String jsonInputString = "{ 'news' : some news}";
-//
-//                    try (OutputStream os = con.getOutputStream()) {
-//                        byte[] input = jsonInputString.getBytes("utf-8");
-//                        Log.d(TAG, "run: input done");
-//                        os.write(input, 0, input.length);
-//                    }catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                    Log.d(TAG, "run: string stuff done");
-//                    try (BufferedReader br = new BufferedReader(
-//                            new InputStreamReader(con.getInputStream(), "utf-8"))) {
-//                        Log.d(TAG, "run: about to send the string");
-//                        StringBuilder response = new StringBuilder();
-//                        String responseLine = null;
-//                        while ((responseLine = br.readLine()) != null) {
-//                            response.append(responseLine.trim());
-//                        }
-//                        Log.d(TAG, "run: "+response.toString());
-//                    }catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }catch (Exception e) {
-//                    e.printStackTrace();
-//                }
 
-                try {
-                    RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-                    String URL = "http://192.168.1.38:5000/data";
-                    JSONObject jsonBody = new JSONObject();
-                    jsonBody.put("news", details);
-                    final String requestBody = jsonBody.toString();
-                    Log.d(TAG, "run: json stuff done");
+                if (!details.isEmpty()) {
+                    try {
+                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                        String URL = "http://192.168.56.1:5000/data";
+                        JSONObject jsonBody = new JSONObject();
+                        jsonBody.put("news", details);
+                        final String requestBody = jsonBody.toString();
+                        Log.d(TAG, "run: json stuff done");
 
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.i("VOLLEY", response);
-                            Log.d(TAG, "onResponse: " + response);
-                            try {
-                                String[] parsed = response.split("\\s+");
-                                if (parsed[0].equalsIgnoreCase("Real")){
-                                    // Simple dialog - no buttons.
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.i("VOLLEY", response);
+                                Log.d(TAG, "onResponse: " + response);
+                                try {
+                                    String[] parsed = response.split("\\s+");
+                                    if (parsed[0].equalsIgnoreCase("Real")) {
 
-                                    builder.setMessage("The news source you entered is REAL with " + parsed[2] + " accuracy");
-                                    builder.setTitle("Real News!");
+                                        // Simple dialog - no buttons.
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                                    //AlertDialog dialog = builder.create();
-                                    builder.show();
-                                }else if (parsed[0].equalsIgnoreCase("Fake")){
-                                    // Simple dialog - no buttons.
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                        builder.setMessage("The news source you entered is REAL");
+                                        builder.setTitle("Real News!");
 
-                                    builder.setMessage("The news source you entered is FAKE with " + parsed[2] + " accuracy");
-                                    builder.setTitle("Fake News!");
+                                        double probability = Double.parseDouble(parsed[2].substring(1, parsed[2].length() - 1));
+                                        if (probability < .5){
+                                            builder.setMessage("The news source you entered is FAKE");
+                                            builder.setTitle("Fake News!");
+                                        }
 
-                                    //AlertDialog dialog = builder.create();
-                                    builder.show();
-                                }else{
-                                    // Simple dialog - no buttons.
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                                    builder.setMessage("There was an error parsing the server response.");
-                                    builder.setTitle("Error!");
+                                        //AlertDialog dialog = builder.create();
+                                        builder.show();
+                                    } else if (parsed[0].equalsIgnoreCase("Fake")) {
+                                        // Simple dialog - no buttons.
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                                    //AlertDialog dialog = builder.create();
-                                    builder.show();
+                                        builder.setMessage("The news source you entered is FAKE");
+                                        builder.setTitle("Fake News!");
+
+                                        double probability = Double.parseDouble(parsed[2].substring(1, parsed[2].length() - 1));
+                                        if (probability > .5){
+                                            builder.setMessage("The news source you entered is REAL");
+                                            builder.setTitle("Real News!");
+                                        }
+
+
+                                        //AlertDialog dialog = builder.create();
+                                        builder.show();
+                                    } else {
+                                        // Simple dialog - no buttons.
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                                        builder.setMessage("There was an error parsing the server response.");
+                                        builder.setTitle("Error!");
+
+                                        //AlertDialog dialog = builder.create();
+                                        builder.show();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                            }catch (Exception e){
-                                e.printStackTrace();
+
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("VOLLEY", error.toString());
+                            }
+                        }) {
+                            @Override
+                            public String getBodyContentType() {
+                                Log.d(TAG, "run: get body content type");
+                                return "application/json; charset=utf-8";
                             }
 
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.e("VOLLEY", error.toString());
-                        }
-                    }) {
-                        @Override
-                        public String getBodyContentType() {
-                            Log.d(TAG, "run: get body content type");
-                            return "application/json; charset=utf-8";
-                        }
-
-                        @Override
-                        public byte[] getBody() throws AuthFailureError {
-                            Log.d(TAG, "run: get body");
-                            try {
-                                return requestBody == null ? null : requestBody.getBytes("utf-8");
-                            } catch (UnsupportedEncodingException uee) {
-                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                                return null;
+                            @Override
+                            public byte[] getBody() throws AuthFailureError {
+                                Log.d(TAG, "run: get body");
+                                try {
+                                    return requestBody == null ? null : requestBody.getBytes("utf-8");
+                                } catch (UnsupportedEncodingException uee) {
+                                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                                    return null;
+                                }
                             }
-                        }
 
-                        @Override
-                        protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                            Log.d(TAG, "run: parse start");
-                            String responseString = "";
-                            if (response != null) {
-                                responseString = String.valueOf(response);
-                                // can get more details such as response.headers
+                            @Override
+                            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                                Log.d(TAG, "run: parse start");
+                                String responseString = "";
+                                if (response != null) {
+                                    responseString = String.valueOf(response);
+                                    // can get more details such as response.headers
+                                }
+                                Log.d(TAG, "run:" + responseString);
+                                //                            return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                                return super.parseNetworkResponse(response);
                             }
-                            Log.d(TAG, "run:" + responseString);
-//                            return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                            return super.parseNetworkResponse(response);
-                        }
-                    };
-                    int socketTimeout = 10000;//30 seconds - change to what you want
-                    RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-                    stringRequest.setRetryPolicy(policy);
-                    Log.d(TAG, "run: requestQueue adding");
-                    requestQueue.add(stringRequest);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                        };
+                        int socketTimeout = 10000;//30 seconds - change to what you want
+                        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+                        stringRequest.setRetryPolicy(policy);
+                        Log.d(TAG, "run: requestQueue adding");
+                        requestQueue.add(stringRequest);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-
             }
         }).start();
 
