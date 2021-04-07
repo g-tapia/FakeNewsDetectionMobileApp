@@ -10,6 +10,7 @@
         android:id="@+id/AppDesc"
         android:layout_width="291dp"
         android:layout_height="45dp"
+        android:fontFamily="@font/roboto_medium"
         android:text="This is an app that uses an AI model to detect if a link contains fake news"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
@@ -24,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:fontFamily="@font/roboto_medium"
         android:text="AI FAKE NEWS"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
@@ -35,23 +37,28 @@
         android:id="@+id/AppContributors"
         android:layout_width="240dp"
         android:layout_height="43dp"
-        android:layout_marginTop="684dp"
+        android:fontFamily="@font/roboto_medium"
         android:text="©2021, Franklin Lu, Alexis Edwards, George Tapia, Truong Pham"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/AppDesc"
-        app:layout_constraintHorizontal_bias="0.509"
-        app:layout_constraintStart_toStartOf="@+id/AppDesc"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.206" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_action_fakenews"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="110dp" />
+        android:layout_width="411dp"
+        android:layout_height="288dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AppDesc"
+        app:srcCompat="@drawable/ic_action_fakenews" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
