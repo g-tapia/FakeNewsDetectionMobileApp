@@ -35,7 +35,7 @@ public class SocialNewsFeed extends AppCompatActivity {
         ModelFeed modelFeed = new ModelFeed(1, 100, 2, R.drawable.ic_profile_pic, "Alexis Edwards", "2 hrs", "I hate Android Studio!!!");
         modelFeedArrayList.add(modelFeed);
 
-        ModelFeed modelFeed2 = new ModelFeed(2, 50, 2, R.drawable.ic_profile_pic, "George Tapia", "3 hrs", "Practice posting status 2");
+        ModelFeed modelFeed2 = new ModelFeed(2, 50, 2, R.drawable.ic_profile_pic, "George Tapia", "3 hrs", "Check out this link: https://21stcenturywire.com/2016/11/12/henningsen-us-anti-trump-protests-similar-to-soros-color-revolutions-abroad/");
         modelFeedArrayList.add(modelFeed2);
 
         ModelFeed modelFeed3 = new ModelFeed(3, 75, 2, R.drawable.ic_profile_pic, "Franklin Lu", "4 hrs", "Practice posting status 3 and this is a really long one to see what happens when the status is really long");

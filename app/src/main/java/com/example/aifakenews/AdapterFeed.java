@@ -1,21 +1,50 @@
 package com.example.aifakenews;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Looper;
 import android.security.identity.InvalidRequestMessageException;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+
+import me.angrybyte.goose.Article;
+import me.angrybyte.goose.Configuration;
+import me.angrybyte.goose.ContentExtractor;
 
 public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> {
 
+    String urlToCheck = "";
+
+    private static final String TAG = "AdapterFeed";
     Context context;
     ArrayList<ModelFeed> modelFeedArrayList = new ArrayList<>();
     RequestManager glide;
@@ -46,7 +75,162 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
         holder.tv_likes.setText(String.valueOf(modelFeed.getLikes()));
         holder.tv_comments.setText(modelFeed.getComments() + " comments");
         holder.tv_time.setText(modelFeed.getTime());
+
+        String[] statusTokens = modelFeed.getStatus().split(" ");
+        for (int i = 0; i < statusTokens.length; i++){
+            if (statusTokens[i].startsWith("https://") || statusTokens[i].startsWith("http://")){
+                urlToCheck = statusTokens[i];
+            }
+        }
+
         holder.tv_status.setText(modelFeed.getStatus());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                Uri dataUri = Uri.parse(urlToCheck);
+                String urlToUse = dataUri.toString();
+
+                Configuration config = new Configuration(context.getCacheDir().getAbsolutePath());
+                ContentExtractor extractor = new ContentExtractor(config);
+
+                Article article = null;
+                try {
+                    article = extractor.extractContent(urlToUse, true);
+                    Log.d(TAG, "run: " + article);
+                } catch (Exception e) {
+                    Toast.makeText(context, "Invalid URL", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "run: " + article);
+                }
+
+                String details = "";
+                try {
+                    details = article.getCleanedArticleText();
+                    Log.d(TAG, "run: DETAILS = " + details);
+                } catch (Exception e) {
+                    Toast.makeText(context, "Invalid URL", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "run: " + details);
+                }
+
+                if (!details.isEmpty()) {
+                    try {
+                        RequestQueue requestQueue = Volley.newRequestQueue(context);
+                        String URL = "http://192.168.56.1:5000/data";
+                        JSONObject jsonBody = new JSONObject();
+                        jsonBody.put("news", details);
+                        final String requestBody = jsonBody.toString();
+                        Log.d(TAG, "run: json stuff done");
+
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.i("VOLLEY", response);
+                                Log.d(TAG, "onResponse: " + response);
+                                try {
+                                    String[] parsed = response.split("\\s+");
+                                    if (parsed[0].equalsIgnoreCase("Real")) {
+
+//                                        // Simple dialog - no buttons.
+//                                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//
+//                                        builder.setMessage("The news source you entered is REAL");
+//                                        builder.setTitle("Real News!");
+
+                                        double probability = Double.parseDouble(parsed[2].substring(1, parsed[2].length() - 1));
+                                        if (probability < .5){
+                                            holder.tv_status.setTextColor(Color.GREEN);
+//                                            builder.setMessage("The news source you entered is FAKE");
+//                                            builder.setTitle("Fake News!");
+                                        }
+
+
+                                        //AlertDialog dialog = builder.create();
+                                        //builder.show();
+                                    } else if (parsed[0].equalsIgnoreCase("Fake")) {
+
+                                        // Simple dialog - no buttons.
+//                                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//
+//                                        builder.setMessage("The news source you entered is FAKE");
+//                                        builder.setTitle("Fake News!");
+
+                                        double probability = Double.parseDouble(parsed[2].substring(1, parsed[2].length() - 1));
+                                        if (probability > .5){
+//                                            builder.setMessage("The news source you entered is REAL");
+//                                            builder.setTitle("Real News!");
+                                            // Set background color to red
+                                            holder.tv_status.setTextColor(Color.RED);
+                                        }
+
+
+                                        //AlertDialog dialog = builder.create();
+                                        //builder.show();
+                                    } else {
+
+                                        holder.tv_status.setTextColor(Color.YELLOW);
+
+                                        // Simple dialog - no buttons.
+//                                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//
+//                                        builder.setMessage("There was an error parsing the server response.");
+//                                        builder.setTitle("Error!");
+//
+//                                        //AlertDialog dialog = builder.create();
+//                                        builder.show();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("VOLLEY", error.toString());
+                            }
+                        }) {
+                            @Override
+                            public String getBodyContentType() {
+                                Log.d(TAG, "run: get body content type");
+                                return "application/json; charset=utf-8";
+                            }
+
+                            @Override
+                            public byte[] getBody() throws AuthFailureError {
+                                Log.d(TAG, "run: get body");
+                                try {
+                                    return requestBody == null ? null : requestBody.getBytes("utf-8");
+                                } catch (UnsupportedEncodingException uee) {
+                                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                                    return null;
+                                }
+                            }
+
+                            @Override
+                            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                                Log.d(TAG, "run: parse start");
+                                String responseString = "";
+                                if (response != null) {
+                                    responseString = String.valueOf(response);
+                                    // can get more details such as response.headers
+                                }
+                                Log.d(TAG, "run:" + responseString);
+                                //                            return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                                return super.parseNetworkResponse(response);
+                            }
+                        };
+                        int socketTimeout = 10000;//30 seconds - change to what you want
+                        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+                        stringRequest.setRetryPolicy(policy);
+                        Log.d(TAG, "run: requestQueue adding");
+                        requestQueue.add(stringRequest);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
 
     }
 
