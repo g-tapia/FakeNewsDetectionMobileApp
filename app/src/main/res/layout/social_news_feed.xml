@@ -13,6 +13,19 @@
         android:layout_height="wrap_content">
     </androidx.recyclerview.widget.RecyclerView>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_white_message_24"
+        app:backgroundTint="@color/com_facebook_blue"
+        app:elevation="6dp"
+        app:tint="@color/white"
+        app:fabSize="normal" />
+
 
 
 </RelativeLayout>

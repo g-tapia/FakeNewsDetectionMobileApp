@@ -5,6 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -13,6 +17,7 @@ public class SocialNewsFeed extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<ModelFeed> modelFeedArrayList = new ArrayList<>();
     AdapterFeed adapterFeed;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,14 @@ public class SocialNewsFeed extends AppCompatActivity {
 
         adapterFeed = new AdapterFeed(this, modelFeedArrayList);
         recyclerView.setAdapter(adapterFeed);
+
+        fab = findViewById(R.id.fab_btn);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(SocialNewsFeed.this, "You clicked the button!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         populateRecyclerView();
 
