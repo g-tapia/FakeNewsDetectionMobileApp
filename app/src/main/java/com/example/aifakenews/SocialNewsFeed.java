@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -24,8 +25,17 @@ public class SocialNewsFeed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.social_news_feed);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null){
+            String postName = intent.getStringExtra("NAME");
+            String postStatus = intent.getStringExtra("STATUS");
 
+            ModelFeed modelFeed5 = new ModelFeed(5, 0, 0, R.drawable.ic_profile_pic, postName, "Just Now", postStatus);
+            modelFeedArrayList.add(modelFeed5);
+        }
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -36,13 +46,15 @@ public class SocialNewsFeed extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(SocialNewsFeed.this, "You clicked the button!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(SocialNewsFeed.this, SocialPostActivity.class);
+                startActivity(intent);
             }
         });
 
         populateRecyclerView();
 
     }
+
 
     public void populateRecyclerView() {
         ModelFeed modelFeed = new ModelFeed(1, 100, 2, R.drawable.ic_profile_pic, "Alexis Edwards", "2 hrs", "I hate Android Studio!!!");
