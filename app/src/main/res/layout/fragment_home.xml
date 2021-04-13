@@ -44,6 +44,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/link1" />
 
+    <Button
+        android:id="@+id/clearhistory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="CLEAR HISTORY"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/history1"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/history1"
+        app:layout_constraintTop_toBottomOf="@+id/history1"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/selecthistory"
+        android:layout_width="0dp"
+        android:layout_height="37dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="SELECT FROM HISTORY"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/link1"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="@+id/link1"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.0" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/history1"
         android:layout_width="331dp"
@@ -55,7 +83,7 @@
         app:layout_constraintEnd_toEndOf="@+id/link1"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/link1"
-        app:layout_constraintTop_toBottomOf="@+id/searchHistoryText"
+        app:layout_constraintTop_toBottomOf="@+id/selecthistory"
         app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -66,18 +94,6 @@
             android:inputType="none" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/searchHistoryText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="@string/search_history"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/link1"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

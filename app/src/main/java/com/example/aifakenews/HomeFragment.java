@@ -3,6 +3,7 @@ package com.example.aifakenews;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
@@ -56,19 +57,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     TextInputLayout history1;
     TextInputEditText history;
     Button button;
+    SharedPreferences sharedPref;
+    Button clearhistory;
+    Button selecthistory;
+
     @Nullable
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        sharedPref = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
+
         editText = view.findViewById(R.id.link);
         history = view.findViewById(R.id.history);
         history1 = view.findViewById(R.id.history1);
         button = view.findViewById(R.id.button);
         button.setOnClickListener(this);
+        clearhistory = view.findViewById(R.id.clearhistory);
+        clearhistory.setOnClickListener(this);
+        selecthistory = view.findViewById(R.id.selecthistory);
+        selecthistory.setOnClickListener(this);
 
-        history.setOnClickListener(new View.OnClickListener() {
+        selecthistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
                 InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -112,7 +123,33 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+        clearhistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                history.getText().clear();
+
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        String link = sharedPref.getString("LINK", "");
+        String historytext = sharedPref.getString("HISTORY", "");
+        editText.setText(link);
+        history.setText(historytext);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("LINK", editText.getText().toString());
+        editor.putString("HISTORY", history.getText().toString());
+        editor.apply();
+        super.onPause();
     }
 
     @Override
