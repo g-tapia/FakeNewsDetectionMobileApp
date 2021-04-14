@@ -43,6 +43,7 @@ import me.angrybyte.goose.ContentExtractor;
 public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> {
 
     String urlToCheck = "";
+    boolean isurl = false;
 
     private static final String TAG = "AdapterFeed";
     Context context;
@@ -68,7 +69,7 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-
+        Log.d(TAG, "onBindViewHolder: " + position);
         final ModelFeed modelFeed = modelFeedArrayList.get(position);
 
         holder.tv_name.setText(modelFeed.getName());
@@ -76,19 +77,31 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
         holder.tv_comments.setText(modelFeed.getComments() + " comments");
         holder.tv_time.setText(modelFeed.getTime());
 
+
         String[] statusTokens = modelFeed.getStatus().split(" ");
         for (int i = 0; i < statusTokens.length; i++){
             if (statusTokens[i].startsWith("https://") || statusTokens[i].startsWith("http://")){
                 urlToCheck = statusTokens[i];
+                isurl = true;
+                //Log.d(TAG, "onBindViewHolder: urltocheck = " + urlToCheck);
             }
         }
 
+        Log.d(TAG, "onBindViewHolder: urltocheck = " + urlToCheck);
+
         holder.tv_status.setText(modelFeed.getStatus());
+        holder.tv_status.setTextColor(Color.BLACK);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 Looper.prepare();
+                if (isurl){
+                    isurl = false;
+                }else{
+                    return;
+                }
+
                 Uri dataUri = Uri.parse(urlToCheck);
                 String urlToUse = dataUri.toString();
 
@@ -100,7 +113,7 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
                     article = extractor.extractContent(urlToUse, true);
                     Log.d(TAG, "run: " + article);
                 } catch (Exception e) {
-                    Toast.makeText(context, "Invalid URL", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Invalid URL", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "run: " + article);
                 }
 
@@ -109,8 +122,8 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
                     details = article.getCleanedArticleText();
                     Log.d(TAG, "run: DETAILS = " + details);
                 } catch (Exception e) {
-                    Toast.makeText(context, "Invalid URL", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "run: " + details);
+                    //Toast.makeText(context, "Invalid URL", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "run: no article for " + urlToCheck);
                 }
 
                 if (!details.isEmpty()) {
@@ -131,53 +144,27 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
                                     String[] parsed = response.split("\\s+");
                                     if (parsed[0].equalsIgnoreCase("Real")) {
 
-//                                        // Simple dialog - no buttons.
-//                                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//
-//                                        builder.setMessage("The news source you entered is REAL");
-//                                        builder.setTitle("Real News!");
-
                                         double probability = Double.parseDouble(parsed[2].substring(1, parsed[2].length() - 1));
                                         if (probability < .5){
+                                            holder.tv_status.setTextColor(Color.RED);
+
+                                        }else{
                                             holder.tv_status.setTextColor(Color.GREEN);
-//                                            builder.setMessage("The news source you entered is FAKE");
-//                                            builder.setTitle("Fake News!");
                                         }
 
-
-                                        //AlertDialog dialog = builder.create();
-                                        //builder.show();
                                     } else if (parsed[0].equalsIgnoreCase("Fake")) {
-
-                                        // Simple dialog - no buttons.
-//                                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//
-//                                        builder.setMessage("The news source you entered is FAKE");
-//                                        builder.setTitle("Fake News!");
 
                                         double probability = Double.parseDouble(parsed[2].substring(1, parsed[2].length() - 1));
                                         if (probability > .5){
-//                                            builder.setMessage("The news source you entered is REAL");
-//                                            builder.setTitle("Real News!");
-                                            // Set background color to red
+                                            holder.tv_status.setTextColor(Color.GREEN);
+                                        }else{
                                             holder.tv_status.setTextColor(Color.RED);
                                         }
 
-
-                                        //AlertDialog dialog = builder.create();
-                                        //builder.show();
                                     } else {
 
                                         holder.tv_status.setTextColor(Color.YELLOW);
 
-                                        // Simple dialog - no buttons.
-//                                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//
-//                                        builder.setMessage("There was an error parsing the server response.");
-//                                        builder.setTitle("Error!");
-//
-//                                        //AlertDialog dialog = builder.create();
-//                                        builder.show();
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -228,6 +215,8 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }else{
+                    holder.tv_status.setTextColor(Color.BLACK);
                 }
             }
         }).start();
