@@ -1,7 +1,4 @@
 Step 1:
-Go to the model_save folder and follow the instructions there.
-
-Step 1.1:
 If you don't have Python, install it using Miniconda: https://docs.conda.io/en/latest/miniconda.html.
 After that, install tensorflow: pip install tensorflow
 
