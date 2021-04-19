@@ -1,10 +1,15 @@
+print("Running server.py")
 from flask import Flask, request
 import flask
 app = Flask(__name__)
 import model
+print("Done importing model")
 from news_cleaner import review_cleaning
+print("Done review cleaning")
 import numpy
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+
+print("Done importing tensorflow")
 
 import warnings
 warnings.filterwarnings('ignore')

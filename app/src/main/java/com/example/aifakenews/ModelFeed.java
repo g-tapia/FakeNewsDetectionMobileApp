@@ -1,6 +1,9 @@
 package com.example.aifakenews;
 
-public class ModelFeed {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ModelFeed implements Parcelable {
 
     int id, likes, comments, propic;
     String name, time, status;
@@ -14,6 +17,28 @@ public class ModelFeed {
         this.time = time;
         this.status = status;
     }
+
+    protected ModelFeed(Parcel in) {
+        id = in.readInt();
+        likes = in.readInt();
+        comments = in.readInt();
+        propic = in.readInt();
+        name = in.readString();
+        time = in.readString();
+        status = in.readString();
+    }
+
+    public static final Creator<ModelFeed> CREATOR = new Creator<ModelFeed>() {
+        @Override
+        public ModelFeed createFromParcel(Parcel in) {
+            return new ModelFeed(in);
+        }
+
+        @Override
+        public ModelFeed[] newArray(int size) {
+            return new ModelFeed[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -70,4 +95,21 @@ public class ModelFeed {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(likes);
+        dest.writeInt(comments);
+        dest.writeInt(propic);
+        dest.writeString(name);
+        dest.writeString(time);
+        dest.writeString(status);
+    }
+
 }

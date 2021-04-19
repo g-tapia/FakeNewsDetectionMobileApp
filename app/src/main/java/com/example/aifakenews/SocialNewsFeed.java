@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -28,11 +29,7 @@ public class SocialNewsFeed extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null){
-            String postName = intent.getStringExtra("NAME");
-            String postStatus = intent.getStringExtra("STATUS");
-
-            ModelFeed modelFeed5 = new ModelFeed(5, 0, 0, R.drawable.ic_profile_pic, postName, "Just Now", postStatus);
-            modelFeedArrayList.add(modelFeed5);
+            modelFeedArrayList = intent.getParcelableArrayListExtra("POSTS_OUT");
         }
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -47,26 +44,33 @@ public class SocialNewsFeed extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SocialNewsFeed.this, SocialPostActivity.class);
+                intent.putExtra("POSTS_IN", modelFeedArrayList);
+
                 startActivity(intent);
             }
         });
 
-        populateRecyclerView();
+        if (modelFeedArrayList.size() == 0) {
+            populateRecyclerView();
+        }
+        else {
+            adapterFeed.notifyDataSetChanged();
+        }
 
     }
 
 
     public void populateRecyclerView() {
-        ModelFeed modelFeed = new ModelFeed(1, 100, 2, R.drawable.ic_profile_pic, "Alexis Edwards", "2 hrs", "I hate Android Studio!!!");
+        ModelFeed modelFeed = new ModelFeed(1, 100, 2, R.drawable.ic_profile_pic, "Alexis Edwards", "10 hrs", "I hate Android Studio!!!");
         modelFeedArrayList.add(modelFeed);
 
-        ModelFeed modelFeed2 = new ModelFeed(2, 50, 2, R.drawable.ic_profile_pic, "George Tapia", "3 hrs", "Check out this link: https://21stcenturywire.com/2016/11/12/henningsen-us-anti-trump-protests-similar-to-soros-color-revolutions-abroad/");
+        ModelFeed modelFeed2 = new ModelFeed(2, 50, 2, R.drawable.ic_profile_pic, "George Tapia", "8 hrs", "Check out this link: https://21stcenturywire.com/2016/11/12/henningsen-us-anti-trump-protests-similar-to-soros-color-revolutions-abroad/");
         modelFeedArrayList.add(modelFeed2);
 
-        ModelFeed modelFeed3 = new ModelFeed(3, 75, 2, R.drawable.ic_profile_pic, "Franklin Lu", "4 hrs", "Practice posting status 3 and this is a really long one to see what happens when the status is really long");
+        ModelFeed modelFeed3 = new ModelFeed(3, 75, 2, R.drawable.ic_profile_pic, "Franklin Lu", "6 hrs", "Practice posting status 3 and this is a really long one to see what happens when the status is really long");
         modelFeedArrayList.add(modelFeed3);
 
-        ModelFeed modelFeed4 = new ModelFeed(4, 25, 2, R.drawable.ic_profile_pic, "Truong Pham", "10 hrs", "Practice posting status 4");
+        ModelFeed modelFeed4 = new ModelFeed(4, 25, 2, R.drawable.ic_profile_pic, "Truong Pham", "2 hrs", "Practice posting status 4");
         modelFeedArrayList.add(modelFeed4);
 
         adapterFeed.notifyDataSetChanged();

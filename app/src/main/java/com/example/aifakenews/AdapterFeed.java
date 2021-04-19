@@ -130,6 +130,7 @@ public class AdapterFeed extends RecyclerView.Adapter<AdapterFeed.MyViewHolder> 
                     try {
                         RequestQueue requestQueue = Volley.newRequestQueue(context);
                         String URL = "http://192.168.56.1:5000/data";
+//                        String URL = "http://10.0.0.56:5000/data";
                         JSONObject jsonBody = new JSONObject();
                         jsonBody.put("news", details);
                         final String requestBody = jsonBody.toString();
