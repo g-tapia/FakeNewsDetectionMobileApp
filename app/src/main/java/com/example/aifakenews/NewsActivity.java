@@ -130,13 +130,14 @@ public class NewsActivity extends AppCompatActivity {
         for (int i = 0; i < pageAdapter.getCount(); i++){
             pageAdapter.notifyChangeInPosition(i);
         }
-
+        Log.d(TAG, "selectItem: " + position);
         fragments.clear();
 
         setTitle(items[position]);
         Intent intent = new Intent(this, NewsService.class);
         intent.putExtra("ID", newsSources.get(position));
         startService(intent);
+        Log.d(TAG, "selectItem: error check");
         mDrawerLayout.closeDrawer(mDrawerList);
 
 

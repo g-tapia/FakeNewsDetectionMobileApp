@@ -31,6 +31,15 @@
             </intent-filter>
         </activity>
         <activity android:name="com.twitter.sdk.android.core.identity.OAuthActivity" />
+        <receiver
+            android:name=".NewsReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
+        <service
+            android:name=".NewsService"
+            android:enabled="true"
+            android:exported="true" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

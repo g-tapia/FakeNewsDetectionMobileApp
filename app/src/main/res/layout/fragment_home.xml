@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:text="Detect"
+        android:text="@string/detect"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:text="CLEAR HISTORY"
+        android:text="@string/clear_history"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/history1"
@@ -63,7 +63,7 @@
         android:layout_width="0dp"
         android:layout_height="37dp"
         android:fontFamily="@font/roboto_medium"
-        android:text="SELECT FROM HISTORY"
+        android:text="@string/select_from_history"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/link1"
@@ -84,7 +84,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/link1"
         app:layout_constraintTop_toBottomOf="@+id/selecthistory"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        android:focusable="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/history"

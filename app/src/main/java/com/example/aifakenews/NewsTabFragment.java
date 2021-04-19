@@ -15,14 +15,16 @@ public class NewsTabFragment extends Fragment {
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.activity_news, container, false);
+        View v = inflater.inflate(R.layout.activity_news, container, false);
+
+        return v;
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         MenuItem item=menu.findItem(R.id.about);
         MenuItem item2=menu.findItem(R.id.help);
-        if(item!=null)
+        if(item != null)
             item.setVisible(false);
             item2.setVisible(false);
     }

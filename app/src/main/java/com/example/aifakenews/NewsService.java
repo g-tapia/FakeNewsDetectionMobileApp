@@ -35,6 +35,7 @@ public class NewsService extends Service{
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent.hasExtra("ID")){
             URL = "https://newsapi.org/v2/top-headlines?sources=" + ((NewsSource) intent.getSerializableExtra("ID")).getId() +  "&language=en&apiKey=" + pk;
+            Log.d(TAG, "onStartCommand: " + URL);
         }
 
         new Thread(new Runnable() {

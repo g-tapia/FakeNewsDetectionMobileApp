@@ -124,6 +124,7 @@ public class NewsFragment extends Fragment {
 
             TextView description = fragment_layout.findViewById(R.id.description);
             description.setText(currentArticle.getDescription());
+            Log.d(TAG, "onCreateView: description = " + currentArticle.getDescription());
             description.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
