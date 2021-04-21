@@ -37,10 +37,15 @@ public class MainActivity extends AppCompatActivity{
                         case R.id.Home_nav:
                             selectedFragment = new HomeFragment();
                             Log.d(TAG, "onNavigationItemSelected: " + selectedFragment);
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                             break;
                         case R.id.News_nav:
-                            selectedFragment = new NewsTabFragment();
-                            Log.d(TAG, "onNavigationItemSelected: " + selectedFragment);
+                            Intent i = new Intent(MainActivity.this, NewsActivity.class);
+                            startActivity(i);
+                            //selectedFragment = new NewsTabFragment();
+                            //Log.d(TAG, "onNavigationItemSelected: " + selectedFragment);
+
+
                             //Below code jumps straight to activity
 //                            Intent j = new Intent(MainActivity.this, NewsActivity.class);
 //                            startActivity(j);
@@ -48,9 +53,10 @@ public class MainActivity extends AppCompatActivity{
                             break;
                         case R.id.Twitter_nav:
                             selectedFragment = new SocialFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                             break;
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
 
                     return true;
                 }

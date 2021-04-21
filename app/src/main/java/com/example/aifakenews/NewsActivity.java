@@ -45,9 +45,7 @@ import java.util.stream.Collectors;
 //api key = ef9b47f477454be1bc1f57a233b4e2fa
 public class NewsActivity extends AppCompatActivity {
 
-
     private Toolbar toolbar;
-
 
     //Global variables for later use
     static final String NEWS_FROM_SERVICE = "NEWS_FROM_SERVICE";

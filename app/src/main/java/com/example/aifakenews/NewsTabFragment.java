@@ -16,7 +16,9 @@ public class NewsTabFragment extends Fragment {
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         setHasOptionsMenu(true);
         View v = inflater.inflate(R.layout.activity_news, container, false);
+        /////////////////
 
+        /////////////////
         return v;
     }
 
