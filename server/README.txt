@@ -5,6 +5,7 @@ After that, install tensorflow: pip install tensorflow
 Step 2:
 Run these commands in the server folder:
 [WINDOWS]
+activate base
 set FLASK_APP=server.py
 python server.py
 
